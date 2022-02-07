@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test2</title>
+</head>
+
+<body>
+    <h1>Board.page</h1>
+
+    <table>
+        <thead>
+            <th>id</th>
+            <th>title</th>
+            <th>memo</th>
+            <th>created</th>
+            <th>updated</th>
+        </thead>
+
+        <tbody>
+            <tr th:each = "row : ${list}">
+                <td><span th:text="${row.id}"></span></td>
+                <td><span th:text="${row.title}"></span></td>
+                <td><span th:text="${row.memo}"></span></td>
+                <td><span th:text="${row.created}"></span></td>
+                <td><span th:text="${row.updated}"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

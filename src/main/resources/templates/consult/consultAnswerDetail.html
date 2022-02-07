@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Document</title>
+</head>
+
+
+<header th:replace="fragments/cm_top.html :: head('상담')"></header>
+
+<body>
+
+    <div class="container">
+        
+        <div class="bg-light p-5 rounded">
+            <h1>상담 제목</h1>
+            <p class="lead" th:text="${consult.consultTitle}">This example is a quick exercise to illustrate how fixed
+                to top navbar works. As you scroll,
+                it will remain fixed to the top of your browser’s viewport.</p>
+
+            <h1>상담 내용</h1>
+            <p class="lead" th:text="${consult.consultText}"></p>
+        </div>
+
+        <form class="needs-validation" th:action="@{/consult/consult-answer}" method="post" th:object="${answerForm}" >
+            <input type="hidden" th:field="*{id}">
+
+            <hr class="my-4">
+            <div class="row mb-3">
+                <label for="answerTitle" class="form-label">답변 제목</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{answerTitle}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('answerTitle')}" th:errors="*{answerTitle}">Title error</small>
+            </div>
+
+            <div class="row mb-3">
+                <label for="answerText" class="form-label">상담 내용</label>
+                <textarea th:field="*{answerText}" class="form-control" rows="10"></textarea>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('answerText')}" th:errors="*{answerText}">Text error</small>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-success btn-lg btn-block" type="submit">답변하기</button>
+                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/answer/answer-list'">취소</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
