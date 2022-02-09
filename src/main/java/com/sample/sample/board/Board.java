@@ -1,6 +1,5 @@
 package com.sample.sample.board;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +26,9 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 30)
+    private String userid;
+
     @Column(nullable = false, length = 20)
     private String Title;
 
@@ -36,9 +38,9 @@ public class Board {
     @Column(nullable = false, length = 10)
     private String Password;
 
-    @CreationTimestamp
-    private CreationTimestamp creationTimestamp;
+    //@CreationTimestamp
+    //private CreationTimestamp creationTimestamp;
 
-    @UpdateTimestamp
-    private UpdateTimestamp updateTimestamp;
+    //@UpdateTimestamp
+    //sprivate UpdateTimestamp updateTimestamp; 
 }

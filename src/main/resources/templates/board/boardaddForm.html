@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+
+<!--<header th:replace="fragments/header.html :: head('')"></header> -->
+
+<body>
+    <div class="container">
+        <form action="" th:object="${boardForm}" class="needs-validation" method="post">
+            <div>
+                <h4>글 제목</h4>
+                    <input type="text" name="" id="" th:field="*{TitleField}">
+            </div>
+
+            <div>
+                <h4>작성자 : </h4>
+                <input type="text" name="" id="" th:field="*{useridField}">
+            </div>
+
+            <div>
+                <textarea th:field="*{TextField}"></textarea>
+            </div>
+
+            <div>
+                <input type="password" th:field="*{PasswordField}">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>
+                <button class="btn btn-danger btn-lg btn-block" type="button"
+                    onclick="href='/list'">취소</button>
+            </div>
+
+
+        </form>
+
+    </div>
+</body>
+
+</html>
