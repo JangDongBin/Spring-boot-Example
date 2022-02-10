@@ -38,9 +38,9 @@ public class Board {
     @Column(nullable = false, length = 10)
     private String Password;
 
-    //@CreationTimestamp
-    //private CreationTimestamp creationTimestamp;
+    @CreationTimestamp
+    private CreationTimestamp creationTimestamp;
 
-    //@UpdateTimestamp
-    //sprivate UpdateTimestamp updateTimestamp; 
+    @UpdateTimestamp
+    private UpdateTimestamp updateTimestamp; 
 }
