@@ -19,12 +19,12 @@ public class BoardService {
 
             if(board.isPresent()){
                 BoardForm boardForm = BoardForm.builder()
+                    .id(board.get().getId())
                     .useridField(board.get().getUserid())
                     .TitleField(board.get().getTitle())
                     .TextField(board.get().getText())
                     .PasswordField(board.get().getPassword())
                     .build();
-
                 model.addAttribute("boardForm", boardForm);
             }
         } else {

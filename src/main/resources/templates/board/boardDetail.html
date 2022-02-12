@@ -16,9 +16,9 @@
         <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
             <hr class="my-4">
             <h4 class="mb-5">상세보기</h4>
+            <input class="form-control" type="hidden" th:field="*{id}">
 
             <div class="row mb-3">
-                <input class="form-control" type="hidden" th:field="*{id}">
                 <label for="TitleField" class="form-label">글 제목</label>
                 <input class="form-control" type="text" name="" id="" th:field="*{TitleField}" disabled>
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('TitleField')}"
@@ -50,7 +50,7 @@
 <script>
     function form_update() {
         if (confirm("수정 하시겠습니까?")) {
-            location.href = "/test/board-add?id=" + $("#id").val();
+            location.href = "/test/board-add?id="+ $("#id").val();
         }
     }
 
