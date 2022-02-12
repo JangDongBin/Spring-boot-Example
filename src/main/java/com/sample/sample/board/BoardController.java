@@ -61,4 +61,16 @@ public class BoardController {
         return "";
     }
 
+    @GetMapping("/pwPopup")
+    public String PasswordPopup(){
+        return "board/boardInsertPw";
+    }
+
+    @PostMapping("/pwPopup")
+    public String PasswordPopupPost(){
+        return "board/boardInsertPw";
+    }
+
+}
+
 }
