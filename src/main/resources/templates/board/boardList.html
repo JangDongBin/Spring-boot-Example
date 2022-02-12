@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title}">Document</title>
+    <!--<title th:text="${title}">Document</title> -->
 </head>
 
 <header th:replace="fragments/cm_top.html :: head('상담')"></header>
@@ -40,9 +40,8 @@
                     <tr>
                         <th>번호</th>
                         <th>아이디</th>
-                        <th>상담제목</th>
-                        <th>상담일</th>
-                        <th>답변일</th>
+                        <th>제목</th>
+                        <th>작성일</th>
                     </tr>
                 </thead>
 
@@ -51,9 +50,8 @@
                     <tr th:each=" row : ${list}" th:onclick="'javascript: detail('+ ${row.id}+')'">
                         <td th:text="${row.id}">번호</td>
                         <td th:text="${row.userid}">아이디</td>
-                        <td th:text="${row.Title}"> 상담제목</td>
-                        <td th:text="${#temporals.format(row.created,'yyyy-MM-dd')}">상담일</td>
-                        <td th:text="${#temporals.format(row.answerTime,'yyyy-MM-dd')}">답변일</td>
+                        <td th:text="${row.Title}"> 제목</td>
+                        <td th:text="${#temporals.format(row.creationTimestamp,'yyyy-MM-dd')}">작성일</td>
                 </tbody>
                 </tr>
             </table>

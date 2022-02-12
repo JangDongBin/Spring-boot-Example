@@ -32,7 +32,7 @@ public class Board {
     private String userid;
 
     @Column(nullable = false, length = 20)
-    private String Title;
+    private String title;
 
     @Column(nullable = false, length = 400)
     private String Text;

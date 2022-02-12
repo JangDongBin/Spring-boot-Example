@@ -39,7 +39,7 @@ public class BoardService {
             newBoard = Board.builder()
                     .id(null)
                     .userid(boardForm.getUseridField())
-                    .Title(boardForm.getTitleField())
+                    .title(boardForm.getTitleField())
                     .Text(boardForm.getTextField())
                     .Password(boardForm.getPasswordField())
                     .build();
@@ -47,7 +47,7 @@ public class BoardService {
             newBoard = Board.builder()
             .id(boardForm.getId())
             .userid(boardForm.getUseridField())
-            .Title(boardForm.getTitleField())
+            .title(boardForm.getTitleField())
             .Text(boardForm.getTextField())
             .Password(boardForm.getPasswordField())
             .build();
