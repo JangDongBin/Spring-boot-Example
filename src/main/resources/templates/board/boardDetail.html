@@ -9,52 +9,40 @@
 </head>
 
 <header th:replace="fragments/cm_top.html :: head('상담')"></header>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <body>
-    <div class="container">
-        <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
-            <hr class="my-4">
-            <h4 class="mb-5">상세보기</h4>
-            <input class="form-control" type="hidden" th:field="*{id}">
+    <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
+        <input class="needs-validation" type="hidden" th:field="*{id}">
+        <div>
+            <h4>글 제목</h4>
+            <input type="text" name="" id="" th:field="*{TitleField}" disabled>
+            <small th:if="${#fields.hasErrors('TitleField')}" th:errors="*{TitleField}"></small>
+        </div>
 
-            <div class="row mb-3">
-                <label for="TitleField" class="form-label">글 제목</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{TitleField}" disabled>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('TitleField')}"
-                    th:errors="*{TitleField}">Title error</small>
+        <div>
+            <span>작성자 : </span>
+            <input type="text" name="" id="" th:field="*{useridField}" disabled>
+            <small th:if="${#fields.hasErrors('useridField')}" th:errors="*{useridField}"></small>
+        </div>
 
-                <label for="useridField" class="form-label">작성자</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{useridField}" disabled>
-            </div>
+        <div>
+            <h6>내용</h6>
+            <textarea th:field="*{TextField}" disabled></textarea>
+            <small th:if="${#fields.hasErrors('TextField')}" th:errors="*{TextField}"></small>
+        </div>
 
-            <div class="row mb-3">
-                <label for="TextField" class="form-label">내용</label>
-                <textarea th:field="*{TextField}" class="form-control" rows="10" disabled></textarea>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('TextField')}"
-                    th:errors="*{TextField}">Text error</small>
-            </div>
-
-            <div class="col-12">
-                <button class="btn btn-success btn-lg btn-block" type="button" onclick="form_update();">수정</button>
-                <button class="btn btn-primary btn-lg btn-block" type="button" onclick="form_list();">목록</button>
-            </div>
-        </form>
-    </div>
-
+        <div>
+            <input type="button" onclick="location.href='/test/board-add?id='" value="수정">
+            <input type="button" onclick="showPWPopup();" value="삭제">
+            <input type="button" onclick="location.href='/test/list'" value="목록">
+        </div>
+    </form>
 </body>
 
 </html>
 
-
 <script>
-    function form_update() {
-        if (confirm("수정 하시겠습니까?")) {
-            location.href = "/test/board-add?id="+ $("#id").val();
-        }
-    }
-
-    function form_list() {
-        location.href = "/test/list";
+    function showPWPopup() {
+        window.open("/test/pwPopup?id=" +$("#id").val(), "a", "width = 400, height=300");
     }
 </script>

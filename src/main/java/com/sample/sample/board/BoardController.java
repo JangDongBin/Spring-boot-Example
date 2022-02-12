@@ -1,5 +1,7 @@
 package com.sample.sample.board;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -21,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/test")
 public class BoardController {
-
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
@@ -77,21 +78,41 @@ public class BoardController {
         return "board/boardDetail";
     }
 
-
-    //게시글 삭제 //준호
+    // 게시글 삭제 //준호
     @GetMapping("/delete")
     public String Delete_board(Model model, @RequestParam Long id) {
         return "";
     }
 
     @GetMapping("/pwPopup")
-    public String PasswordPopup(){
+    public String PasswordPopup(Model model, @RequestParam(required = false) Long id) {
+
+
+
+
         return "board/boardInsertPw";
     }
 
     @PostMapping("/pwPopup")
-    public String PasswordPopupPost(){
-        return "board/boardInsertPw";
-    }
+    public String PasswordPopupPost(Model model, @RequestParam(required = false) @Valid BoardForm boardForm) {
 
+        /* if (id != null) {
+            Optional<Board> board = boardRepository.findById(id);
+
+            if (board.isPresent()) {
+                BoardForm boardForm = BoardForm.builder()
+                        .useridField(board.get().getUserid())
+                        .TitleField(board.get().getTitle())
+                        .TextField(board.get().getText())
+                        .PasswordField(board.get().getPassword()).build();
+
+                String Inputpassword = boardForm.getPasswordField();
+
+            }
+            
+
+        } */
+
+        return "board/boardInsertPw";
+    } 
 }
