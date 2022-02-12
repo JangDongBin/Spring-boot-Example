@@ -38,6 +38,7 @@
             
             <div class="col-12">
                 <button class="btn btn-success btn-lg btn-block" type="button" onclick="form_update();">수정</button>
+                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="form_del();">삭제</button>
                 <button class="btn btn-primary btn-lg btn-block" type="button" onclick="form_list();">목록</button>
             </div>
         </form>
@@ -57,5 +58,12 @@
 
     function form_list() {
         location.href = "/test/list";
+    }
+
+    
+    function form_del() {
+        if (confirm("삭제 하시겠습니까?")) {
+            location.href = "/test/pwPopup?id="+ $("#id").val();
+        }
     }
 </script>

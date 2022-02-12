@@ -8,13 +8,18 @@
 </head>
 <body>
     <div>
-    <form> 
-        <input class="form-control" type="hidden" th:field="*{id}">     
+
+
+    <form class="needs-validation" th:action="@{/test/pwPopup}" method="post" th:object="${pwobj}"> 
+        <input class="form-control" type="hidden" th:field="*{id}">  
         비밀번호 : <input id='pwd' type='password'/>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">입력</button>
-        <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/consult/consult-list'">취소</button>
-      </form>
-      
+    </form>
+
+
+    <button type="submit" class="btn btn-primary btn-lg">확인</button>
+    <button type="button" class="btn btn-secondary btn-lg" onclick="history.go(-1)">취소</button>
+
+    
       
     </div>
 

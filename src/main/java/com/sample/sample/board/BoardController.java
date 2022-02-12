@@ -87,16 +87,21 @@ public class BoardController {
     @GetMapping("/pwPopup")
     public String PasswordPopup(Model model, @RequestParam(required = false) Long id) {
 
-
+        model.addAttribute("id",id);
 
 
         return "board/boardInsertPw";
     }
 
     @PostMapping("/pwPopup")
-    public String PasswordPopupPost(Model model, @RequestParam(required = false) @Valid BoardForm boardForm) {
+    public String PasswordPopupPost(@Valid BoardForm pwform, Model model) {
+        System.out.println("\n\n\n\n\n답변 폼 :: " + pwform + "\n\n\n\n\n\n");
+       
+        /*  Optional<Board> 
 
-        /* if (id != null) {
+
+
+        if (id != null) {
             Optional<Board> board = boardRepository.findById(id);
 
             if (board.isPresent()) {
@@ -111,7 +116,7 @@ public class BoardController {
             }
             
 
-        } */
+        }  */
 
         return "board/boardInsertPw";
     } 
