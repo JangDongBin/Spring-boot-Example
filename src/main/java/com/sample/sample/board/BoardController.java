@@ -49,7 +49,7 @@ public class BoardController {
         model.addAttribute("list", boardPagingList);
 
         model.addAttribute("searchString", searchString);
-        model.addAttribute("title", "리스트");
+        model.addAttribute("title", "상담리스트");
 
         return "board/boardList";
     }
@@ -82,8 +82,24 @@ public class BoardController {
         return "";
     }
 
+    //비밀번호
     @GetMapping("/pwPopup")
-    public String PasswordPopup(){
+    public String PasswordPopup(Model model, @RequestMapping(required = false) Long id){
+
+        if(id != null){
+            Optional<Board> board = boardRepository.findById(id);
+
+            if(board.isPresent()){
+                BoardForm boardForm = BoardForm.builder()
+                    .useridField(board.get().getUserid())
+                    .TitleField(board.get().getTitle())
+                    .TextField(board.get().getText())
+                    .PasswordField(board.get().getPassword());
+                String password = boardForm.getPasswordField();
+
+                
+
+        
         return "board/boardInsertPw";
     }
 
