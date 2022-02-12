@@ -87,15 +87,13 @@ public class BoardController {
     @GetMapping("/pwPopup")
     public String PasswordPopup(Model model, @RequestParam(required = false) Long id) {
 
-        model.addAttribute("id",id);
-
-
+        boardService.check_pw(model, id);
         return "board/boardInsertPw";
     }
 
     @PostMapping("/pwPopup")
-    public String PasswordPopupPost(@Valid BoardForm pwform, Model model) {
-        System.out.println("\n\n\n\n\n답변 폼 :: " + pwform + "\n\n\n\n\n\n");
+    public String PasswordPopupPost(PasswordForm pwForm, Model model) {
+        System.out.println("\n\n\n\n\n답변 폼 :: " + pwForm + "\n\n\n\n\n\n");
        
         /*  Optional<Board> 
 
