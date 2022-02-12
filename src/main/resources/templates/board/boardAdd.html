@@ -8,38 +8,41 @@
     <title>Title</title>
 </head>
 
-<!--<header th:replace="fragments/header.html :: head('')"></header> -->
+<header th:replace="fragments/cm_top.html :: head('상담')"></header>
 
 <body>
     <div class="container">
         <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
             <input class="form-control" type="hidden" th:field="*{id}">
-            <div>
-                <h4>글 제목</h4>
-                <input type="text" name="" id="" th:field="*{TitleField}">
-                <small th:if="${#fields.hasErrors('TitleField')}" th:errors="*{TitleField}"></small>
+            <hr class="my-4">
+            <h4 class="mb-5">글작성</h4>
+
+            <div class="row mb-3">
+                <label for="TitleField" class="form-label">글 제목</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{TitleField}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('TitleField')}"
+                    th:errors="*{TitleField}">Title error</small>
+
+                <label for="useridField" class="form-label">작성자</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{useridField}">
             </div>
 
-            <div>
-                <span>작성자 : </span>
-                <input type="text" name="" id="" th:field="*{useridField}">
-                <small th:if="${#fields.hasErrors('useridField')}" th:errors="*{useridField}"></small>
+            <div class="row mb-3">
+                <label for="TextField" class="form-label">내용</label>
+                <textarea th:field="*{TextField}" class="form-control" rows="10"></textarea>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('TextField')}"
+                    th:errors="*{TextField}">Text error</small>
             </div>
 
-            <div>
-                <h6>내용</h6>
-                <textarea th:field="*{TextField}"></textarea>
-                <small th:if="${#fields.hasErrors('TextField')}" th:errors="*{TextField}"></small>
+            <div class="row mb-3">
+                <label for="PasswordField" class="form-label">비밀번호</label>
+                <input class="form-control" type="password" name="" id="" th:field="*{PasswordField}">
+                <small th:if="${#fields.hasErrors('PasswordField')}" th:errors="*{PasswordField}">Password error</small>
             </div>
 
-            <div>
-                <span>비밀번호 : </span>
-                <input type="password" th:field="*{PasswordField}">
-                <small th:if="${#fields.hasErrors('PasswordField')}" th:errors="*{PasswordField}"></small>
-            </div>
             <div class="col-12">
-                <button type="submit">작성</button>
-                <button type="button" onclick="href='/list'">취소</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>
+                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/test/list'">취소</button>
             </div>
         </form>
 
