@@ -2,6 +2,9 @@ package com.sample.sample.board;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/test")
 public class BoardController {
 
+
+    private final BoardRepository boardRepository;
     private final BoardService boardService;
     private final BoardFormValidator boardFormValidator;
 
@@ -29,8 +34,24 @@ public class BoardController {
 
     // 용훈
     @GetMapping("/list")
-    public String HomeList() {
-        return "test";
+    public String HomeList(Model model, @PageableDefault(size = 20) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "") String searchString) {
+        Page<Board> boardPagingList = boardRepository
+                .findByUseridContainingOrTitleContainingOrderByIdDesc(searchString, searchString, pageable);
+
+        int startPage = Math.max(1,
+                (boardPagingList.getPageable().getPageNumber() / pageable.getPageSize()) * pageable.getPageSize()
+                        + 1);
+        int endPage = Math.min(boardPagingList.getTotalPages(), startPage + pageable.getPageSize() - 1);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("list", boardPagingList);
+
+        model.addAttribute("searchString", searchString);
+        model.addAttribute("title", "상담리스트");
+
+        return "board/boardList";
     }
 
     // 게시글 작성 및 수정 //동빈
@@ -70,7 +91,5 @@ public class BoardController {
     public String PasswordPopupPost(){
         return "board/boardInsertPw";
     }
-
-}
 
 }
