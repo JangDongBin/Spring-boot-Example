@@ -72,11 +72,13 @@ public class BoardController {
     }
 
     @GetMapping("/detail-board")
-    public String DetailBoard(Model model, @RequestParam(required = false) Long id) {
+    public String DetailBoard(Model model, @RequestParam Long id) {
         boardService.detailProcess(model, id);
         return "board/boardDetail";
     }
 
+
+    //게시글 삭제 //준호
     @GetMapping("/delete")
     public String Delete_board(Model model, @RequestParam Long id) {
         return "";
