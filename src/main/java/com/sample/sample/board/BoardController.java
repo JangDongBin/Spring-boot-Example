@@ -49,7 +49,7 @@ public class BoardController {
         model.addAttribute("list", boardPagingList);
 
         model.addAttribute("searchString", searchString);
-        model.addAttribute("title", "상담리스트");
+        model.addAttribute("title", "리스트");
 
         return "board/boardList";
     }
