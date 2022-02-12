@@ -27,32 +27,40 @@ public class BoardController {
         webDataBinder.addValidators(boardFormValidator);
     }
 
+    //용훈
     @GetMapping("/list")
-    public String HomeList() { // 용훈
+    public String HomeList() {
         return "test";
     }
 
-    // 게시글 작성 및 수정
-    @GetMapping("board-detail")
-    public String detail(Model model, @RequestParam(required = false) Long id) {
-
+    // 게시글 작성 및 수정 //동빈
+    @GetMapping("/board-add")
+    public String Add_board(Model model, @RequestParam(required = false) Long id) {
         boardService.detailProcess(model, id);
         model.addAttribute("title", "게시글 작성");
-        return "board/boardaddForm";
+        return "board/boardAdd";
     }
 
-    @PostMapping("/addboard")
+    @PostMapping("/board-add")
     public String Post_AddBoard(@Valid BoardForm boardForm, Errors errors, Model model) {
         if (errors.hasErrors()) {
-            return "board/boardaddForm";
+            return "board/boardAdd";
         }
 
         Board newbBoard = boardService.updateProcess(boardForm);
-        return "redirect:/board-detail?id=" + newbBoard.getId();
+        return "redirect:/test/detail-board?id=" + newbBoard.getId();
     }
 
     @GetMapping("/detail-board")
-    public String DetailBoard() {
+    public String DetailBoard(Model model, @RequestParam(required = false) Long id) {
+        boardService.detailProcess(model, id);
+
+        return "board/boardDetail";
+    }
+    
+    @GetMapping("/delete")
+    public String Delete_board(Model model, @RequestParam Long id){
         return "";
     }
+
 }

@@ -1,5 +1,7 @@
 package com.sample.sample.board;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,8 +41,8 @@ public class Board {
     private String Password;
 
     @CreationTimestamp
-    private CreationTimestamp creationTimestamp;
+    private LocalDateTime creationTimestamp;
 
     @UpdateTimestamp
-    private UpdateTimestamp updateTimestamp; 
+    private LocalDateTime updateTimestamp; 
 }
