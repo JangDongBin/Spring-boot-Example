@@ -1,5 +1,7 @@
 package com.sample.sample.board;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -21,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/test")
 public class BoardController {
-
 
     private final BoardRepository boardRepository;
     private final BoardService boardService;
@@ -49,7 +50,7 @@ public class BoardController {
         model.addAttribute("list", boardPagingList);
 
         model.addAttribute("searchString", searchString);
-        model.addAttribute("title", "상담리스트");
+        model.addAttribute("title", "리스트");
 
         return "board/boardList";
     }
@@ -72,40 +73,46 @@ public class BoardController {
     }
 
     @GetMapping("/detail-board")
-    public String DetailBoard(Model model, @RequestParam(required = false) Long id) {
+    public String DetailBoard(Model model, @RequestParam Long id) {
         boardService.detailProcess(model, id);
         return "board/boardDetail";
     }
 
+    // 게시글 삭제 //준호
     @GetMapping("/delete")
     public String Delete_board(Model model, @RequestParam Long id) {
         return "";
     }
 
-    //비밀번호
     @GetMapping("/pwPopup")
-    public String PasswordPopup(Model model, @RequestMapping(required = false) Long id){
+    public String PasswordPopup(Model model, @RequestParam(required = false) Long id) {
 
-        if(id != null){
-            Optional<Board> board = boardRepository.findById(id);
 
-            if(board.isPresent()){
-                BoardForm boardForm = BoardForm.builder()
-                    .useridField(board.get().getUserid())
-                    .TitleField(board.get().getTitle())
-                    .TextField(board.get().getText())
-                    .PasswordField(board.get().getPassword());
-                String password = boardForm.getPasswordField();
 
-                
 
-        
         return "board/boardInsertPw";
     }
 
     @PostMapping("/pwPopup")
-    public String PasswordPopupPost(){
-        return "board/boardInsertPw";
-    }
+    public String PasswordPopupPost(Model model, @RequestParam(required = false) @Valid BoardForm boardForm) {
 
+        /* if (id != null) {
+            Optional<Board> board = boardRepository.findById(id);
+
+            if (board.isPresent()) {
+                BoardForm boardForm = BoardForm.builder()
+                        .useridField(board.get().getUserid())
+                        .TitleField(board.get().getTitle())
+                        .TextField(board.get().getText())
+                        .PasswordField(board.get().getPassword()).build();
+
+                String Inputpassword = boardForm.getPasswordField();
+
+            }
+            
+
+        } */
+
+        return "board/boardInsertPw";
+    } 
 }

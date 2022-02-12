@@ -12,7 +12,7 @@
 
 <body>
     <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
-        <input class="form-control" type="hidden" th:field="*{id}">
+        <input class="needs-validation" type="hidden" th:field="*{id}">
         <div>
             <h4>글 제목</h4>
             <input type="text" name="" id="" th:field="*{TitleField}" disabled>
@@ -33,10 +33,16 @@
 
         <div>
             <input type="button" onclick="location.href='/test/board-add?id='" value="수정">
-            <input type="button" onclick="location.href='/test/board-delete?id='" value="삭제">
+            <input type="button" onclick="showPWPopup();" value="삭제">
             <input type="button" onclick="location.href='/test/list'" value="목록">
         </div>
     </form>
 </body>
 
 </html>
+
+<script>
+    function showPWPopup() {
+        window.open("/test/pwPopup?id=" +$("#id").val(), "a", "width = 400, height=300");
+    }
+</script>
