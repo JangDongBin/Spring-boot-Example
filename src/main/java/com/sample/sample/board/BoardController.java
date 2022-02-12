@@ -116,6 +116,6 @@ public class BoardController {
 
         }  */
 
-        return "board/boardInsertPw";
+        return "redirect:/test/list";
     } 
 }
