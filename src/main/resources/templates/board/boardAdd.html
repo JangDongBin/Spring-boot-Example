@@ -12,7 +12,8 @@
 
 <body>
     <div class="container">
-        <form action="" th:object="${boardForm}" class="needs-validation" method="post">
+        <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
+            <input class="form-control" type="hidden" th:field="*{id}">
             <div>
                 <h4>글 제목</h4>
                 <input type="text" name="" id="" th:field="*{TitleField}">
@@ -20,23 +21,25 @@
             </div>
 
             <div>
-                <h4>작성자 : </h4>
+                <span>작성자 : </span>
                 <input type="text" name="" id="" th:field="*{useridField}">
                 <small th:if="${#fields.hasErrors('useridField')}" th:errors="*{useridField}"></small>
             </div>
 
             <div>
+                <h6>내용</h6>
                 <textarea th:field="*{TextField}"></textarea>
                 <small th:if="${#fields.hasErrors('TextField')}" th:errors="*{TextField}"></small>
             </div>
 
             <div>
+                <span>비밀번호 : </span>
                 <input type="password" th:field="*{PasswordField}">
                 <small th:if="${#fields.hasErrors('PasswordField')}" th:errors="*{PasswordField}"></small>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>
-                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/list'">취소</button>
+                <button type="submit">작성</button>
+                <button type="button" onclick="href='/list'">취소</button>
             </div>
         </form>
 

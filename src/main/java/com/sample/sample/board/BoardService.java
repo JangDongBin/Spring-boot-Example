@@ -13,6 +13,25 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
+    public void detailProcess(Model model, Long id) {
+        if(id != null){
+            Optional<Board> board = boardRepository.findById(id);
+
+            if(board.isPresent()){
+                BoardForm boardForm = BoardForm.builder()
+                    .useridField(board.get().getUserid())
+                    .TitleField(board.get().getTitle())
+                    .TextField(board.get().getText())
+                    .PasswordField(board.get().getPassword())
+                    .build();
+
+                model.addAttribute("boardForm", boardForm);
+            }
+        } else {
+            model.addAttribute("boardForm", new BoardForm());
+        }
+    }
+
     public Board updateProcess(BoardForm boardForm){
         Board newBoard;
 
@@ -34,26 +53,7 @@ public class BoardService {
             .build();
         }
 
-        //boardRepository.save(newBoard);
+        boardRepository.save(newBoard);
         return newBoard;
-    }
-
-    public void detailProcess(Model model, Long id) {
-        if(id != null){
-            Optional<Board> board = boardRepository.findById(id);
-
-            if(board.isPresent()){
-                BoardForm boardForm = BoardForm.builder()
-                    .useridField(board.get().getUserid())
-                    .TitleField(board.get().getTitle())
-                    .TextField(board.get().getText())
-                    .PasswordField(board.get().getPassword())
-                    .build();
-
-                model.addAttribute("boardForm", boardForm);
-            }
-        } else {
-            model.addAttribute("boardForm", new BoardForm());
-        }
     }
 }
