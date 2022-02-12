@@ -8,6 +8,8 @@
     <title>상세보기</title>
 </head>
 
+<header th:replace="fragments/cm_top.html :: head('상담')"></header>
+
 <body>
     <form th:action="@{/test/board-add}" th:object="${boardForm}" class="needs-validation" method="post">
         <input class="form-control" type="hidden" th:field="*{id}">
