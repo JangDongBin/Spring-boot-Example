@@ -35,7 +35,9 @@
                     th:errors="*{TextField}">Text error</small>
             </div>
 
-            
+
+            <input id="pwf" type="hidden" th:field="*{PasswordField}">
+
             <div class="col-12">
                 <button class="btn btn-success btn-lg btn-block" type="button" onclick="form_update();">수정</button>
                 <button class="btn btn-danger btn-lg btn-block" type="button" onclick="form_del();">삭제</button>
@@ -52,7 +54,12 @@
 <script>
     function form_update() {
         if (confirm("수정 하시겠습니까?")) {
-            location.href = "/test/board-add?id="+ $("#id").val();
+            var password = prompt("비밀번호 입력");
+            if(document.getElementById("pwf").value == password){
+                location.href = "/test/board-add?id=" + $("#id").val();
+            } else{
+                location.href = "/test/detail-board?id=" + $("#id").val();
+            }
         }
     }
 
@@ -60,10 +67,10 @@
         location.href = "/test/list";
     }
 
-    
+
     function form_del() {
         if (confirm("삭제 하시겠습니까?")) {
-            location.href = "/test/pwPopup?id="+ $("#id").val();
+            location.href = "/test/pwPopup?id=" + $("#id").val();
         }
     }
 </script>
