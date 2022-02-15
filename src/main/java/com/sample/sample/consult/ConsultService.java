@@ -15,11 +15,9 @@ public class ConsultService {
 
     public void detailProcess(Model model, Long id) {
         if (id != null) {
-
             Optional<Consult> consult = consultRepository.findById(id);
 
             if (consult.isPresent()) {
-
                 ConsultForm consultForm = ConsultForm.builder()
                         .userid(consult.get().getUserid())
                         .id(consult.get().getId())

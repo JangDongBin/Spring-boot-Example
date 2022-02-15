@@ -25,6 +25,7 @@ public class BoardService {
                         .TextField(board.get().getText())
                         .PasswordField(board.get().getPassword())
                         .build();
+                        
                 model.addAttribute("boardForm", boardForm);
             }
         } else {
