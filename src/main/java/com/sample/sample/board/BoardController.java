@@ -68,8 +68,8 @@ public class BoardController {
             return "board/boardAdd";
         }
 
-        Board newBoard = boardService.updateProcess(boardForm);
-        return "redirect:/test/detail-board?id=" + newBoard.getId();
+        Board newbBoard = boardService.updateProcess(boardForm);
+        return "redirect:/test/detail-board?id=" + newbBoard.getId();
     }
 
     @GetMapping("/detail-board")
@@ -79,43 +79,26 @@ public class BoardController {
     }
 
     // 게시글 삭제 //준호
-    @GetMapping("/delete")
-    public String Delete_board(Model model, @RequestParam Long id) {
-        return "";
-    }
-
     @GetMapping("/pwPopup")
     public String PasswordPopup(Model model, @RequestParam(required = false) Long id) {
 
-        boardService.check_pw(model, id);
+        boardService.get_pw_id(model, id);                                          // 게시글 ID 값을 입력 폼으로 던져주자.
         return "board/boardInsertPw";
     }
 
     @PostMapping("/pwPopup")
-    public String PasswordPopupPost(PasswordForm pwForm, Model model) {
-        System.out.println("\n\n\n\n\n답변 폼 :: " + pwForm + "\n\n\n\n\n\n");
-       
-        /*  Optional<Board> 
+    public String PasswordPopupPost(PasswordForm pwForm, Model model) {        
+        Optional<Board> PwSerchId = boardRepository.findById(pwForm.getId());       // 파라미터로 받은 id로 해당 엔티티갖고옴
 
-
-
-        if (id != null) {
-            Optional<Board> board = boardRepository.findById(id);
-
-            if (board.isPresent()) {
-                BoardForm boardForm = BoardForm.builder()
-                        .useridField(board.get().getUserid())
-                        .TitleField(board.get().getTitle())
-                        .TextField(board.get().getText())
-                        .PasswordField(board.get().getPassword()).build();
-
-                String Inputpassword = boardForm.getPasswordField();
-
+        // db에서 id로 게시글 불러온 id 불러오기
+        if (PwSerchId.isPresent()) {                                                // 정상접근이라면
+            if (PwSerchId.get().getPassword().equals(pwForm.getPasswordFiled())) {  // 만약 입력 비밀번호가 같으면
+                boardRepository.deleteById(pwForm.getId());                         // 삭제
+            } else {
+                return "redirect:/test/pwPopup?id=" + pwForm.getId();               // 비밀번호 틀렸을 시 그 창 그대로
             }
-            
+        }
+        return "redirect:/test/list";                                               // 게시글 삭제 후 리스트 페이지로 리턴
+    }
 
-        }  */
-
-        return "redirect:/test/list";
-    } 
 }
