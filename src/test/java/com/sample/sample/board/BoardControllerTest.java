@@ -56,7 +56,7 @@ public class BoardControllerTest {
                     .param("TitleField", "게시글 수정 정상")
                     .param("TextField", "게시글 수정 정상입니다.")
                     .param("PasswordField", "1111"))
-                    .andExpect(status().isOk());
+                    .andExpect(status().is3xxRedirection());
     }
 
     @DisplayName("게시글 수정 - 오류")
