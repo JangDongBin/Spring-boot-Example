@@ -68,8 +68,8 @@ public class BoardController {
             return "board/boardAdd";
         }
 
-        Board newbBoard = boardService.updateProcess(boardForm);
-        return "redirect:/test/detail-board?id=" + newbBoard.getId();
+        Board newBoard = boardService.updateProcess(boardForm);
+        return "redirect:/test/detail-board?id=" + newBoard.getId();
     }
 
     @GetMapping("/detail-board")
