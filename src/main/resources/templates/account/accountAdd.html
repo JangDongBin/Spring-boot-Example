@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계정생성</title>
+</head>
+
+<header th:replace="fragments/header.html"></header>
+
+<body>
+    <div class="container">
+        <form th:action="@{/account/add}" th:object="${accountForm}" class="needs-validation" method="post">
+            <input class="form-control" type="hidden" th:field="*{id}">
+            <hr class="my-4">
+            <h4 class="mb-5">회원가입</h4>
+
+            <div class="row mb-3">
+                <label for="useridField" class="form-label">아이디</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{useridField}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('useridField')}"
+                    th:errors="*{useridField}">Id error</small>
+            </div>
+
+            <div>
+                <label for="passwordField" class="form-label">비밀번호</label>
+                <input class="form-control" type="password" name="" id="" th:field="*{passwordField}">
+                <small th:if="${#fields.hasErrors('passwordField')}" th:errors="*{passwordField}">Password error</small>
+            </div>
+
+            <div class="row mb-3">
+                <label for="nameField" class="form-label">이름</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{nameField}">
+                <small th:if="${#fields.hasErrors('nameField')}" th:errors="*{nameField}">Name error</small>
+            </div>
+
+            <div class="row mb-3">
+                <label for="telField" class="form-label">전화번호</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{telField}">
+                <small th:if="${#fields.hasErrors('telField')}" th:errors="*{telField}">Tel error</small>
+            </div>
+
+            <div class="row mb-3">
+                <label for="emailField" class="form-label">이메일</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{emailField}">
+                <small th:if="${#fields.hasErrors('emailField')}" th:errors="*{emailField}">Email error</small>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">회원 가입</button>
+                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/test/list'">취소</button>
+            </div>
+        </form>
+</body>
+
+</html>
