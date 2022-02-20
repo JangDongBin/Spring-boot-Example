@@ -20,11 +20,10 @@
             <div class="row mb-3">
                 <label for="useridField" class="form-label">아이디</label>
                 <input class="form-control" type="text" name="" id="" th:field="*{useridField}">
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('useridField')}"
-                    th:errors="*{useridField}">Id error</small>
+                <small th:if="${#fields.hasErrors('useridField')}" th:errors="*{useridField}">Id error</small>
             </div>
 
-            <div>
+            <div class="row mb-3">
                 <label for="passwordField" class="form-label">비밀번호</label>
                 <input class="form-control" type="password" name="" id="" th:field="*{passwordField}">
                 <small th:if="${#fields.hasErrors('passwordField')}" th:errors="*{passwordField}">Password error</small>

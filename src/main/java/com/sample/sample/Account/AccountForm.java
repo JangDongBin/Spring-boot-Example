@@ -25,7 +25,7 @@ public class AccountForm {
     @NotBlank
     @Length(min = 6, max = 16)
     private String passwordField;
-    
+
     @NotBlank
     @Length(min = 3, max = 20)
     private String nameField;
@@ -35,6 +35,6 @@ public class AccountForm {
     private String telField;
 
     @NotBlank
-    @Length(min = 10, max = 10)
+    @Length(min = 10, max = 30)
     private String emailField;
 }

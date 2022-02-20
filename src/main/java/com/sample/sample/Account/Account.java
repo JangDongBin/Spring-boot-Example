@@ -11,10 +11,16 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "ACCOUNT")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,5 +51,5 @@ public class Account {
     private LocalDateTime creationTimestamp;
 
     @UpdateTimestamp
-    private LocalDateTime updateTimestamp; 
+    private LocalDateTime updateTimestamp;
 }
