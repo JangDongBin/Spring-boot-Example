@@ -23,7 +23,7 @@ public class Account {
     @Column(nullable = false, length = 20)
     private String userid;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 16)
     private String password;
 
     @Column(nullable = false, length = 20)

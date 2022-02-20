@@ -1,0 +1,40 @@
+package com.sample.sample.Account;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AccountForm {
+    private Long id;
+
+    @NotBlank
+    @Length(min = 3, max = 20)
+    @Pattern(regexp = "^[a-z0-9_-]{3,20}$")
+    private String useridField;
+
+    @NotBlank
+    @Length(min = 6, max = 16)
+    private String passwordField;
+    
+    @NotBlank
+    @Length(min = 3, max = 20)
+    private String nameField;
+
+    @NotBlank
+    @Length(min = 10, max = 30)
+    private String telField;
+
+    @NotBlank
+    @Length(min = 10, max = 10)
+    private String emailField;
+}
