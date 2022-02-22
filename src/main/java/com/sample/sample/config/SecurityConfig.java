@@ -18,6 +18,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
             .mvcMatchers("/account/add").permitAll()
             .anyRequest().authenticated();
+
+
+                // form login
+        http.formLogin()
+            .loginPage("/account/login").permitAll();
+    
+            // form logout
+        http.logout()
+            .logoutSuccessUrl("/");
     }
 
     @Override
@@ -28,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
              //임의의 위치에 대해서 검증자체를 하지않음.
             //필터 자체를 없애버림
     }
+    
 
     @Bean
     public PasswordEncoder PasswordEncoder(){

@@ -50,4 +50,18 @@ public class AccountController {
 
         return "account/accountCheck";
     }
+
+    @GetMapping("/main")
+    public String Account_main(Model model, @RequestParam(required = false) Long id) {
+        accountService.detailProcess(model, id);
+        return "account/accountAdd";
+    }
+
+    @GetMapping("/login")
+    public String Account_login(Model model, @RequestParam(required = false) Long id) {        
+        return "account/accountLogin";
+    }
+
+
+
 }
