@@ -62,6 +62,13 @@ public class AccountController {
         return "account/accountLogin";
     }
 
+    @GetMapping("/signup")
+    public String Account_signup(Model model, @RequestParam(required = false) Long id) {        
+        
+        
+        return "account/accountLogin";
+    }
+
 
 
 }
