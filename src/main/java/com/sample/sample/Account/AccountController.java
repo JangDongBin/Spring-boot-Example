@@ -1,7 +1,5 @@
 package com.sample.sample.Account;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -40,20 +38,16 @@ public class AccountController {
         if (errors.hasErrors()) {
             return "account/accountAdd";
         }
-        //Form 값 확인
-        /*
-        System.out.println(accountForm.getUseridField());
-        System.out.println(accountForm.getPasswordField());
-        System.out.println("\n\n");
-        System.out.println(accountService.passwordEncoderProcess(accountForm.getPasswordField()));//pw암호화 확인
-        System.out.println("\n\n");
-        System.out.println(accountForm.getNameField());
-        System.out.println(accountForm.getTelField());
-        System.out.println(accountForm.getEmailField());
-        */
-
-        //Account newAccount = 
+        // Form 값 확인
+        //System.out.println(accountForm.getUseridField());
+        //System.out.println(accountForm.getPasswordField());
+        //System.out.println(accountService.passwordEncoderProcess(accountForm.getPasswordField()));//pw암호화 확인
+        //System.out.println(accountForm.getNameField());
+        //System.out.println(accountForm.getTelField());
+        //System.out.println(accountForm.getEmailField());
+        
         accountService.updateProcess(accountForm);
+
         return "account/accountCheck";
     }
 }
