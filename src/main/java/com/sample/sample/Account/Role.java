@@ -5,19 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-enum Authority_Value {
-    NoAuth,
-    Iron,
-    Bronze,
-    Silver,
-    Gold
-}
 
 @Data
 @Entity(name = "ROLE")
