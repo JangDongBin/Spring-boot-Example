@@ -12,5 +12,8 @@ public class SampleApplication {
 		SpringApplication.run(SampleApplication.class, args);
 	}
 
-	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return 
+	}
 }
