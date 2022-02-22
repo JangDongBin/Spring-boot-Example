@@ -112,7 +112,7 @@ public class AccountService {
                 stringBuilder.append(", ");
             final_auth_value = stringBuilder.toString();
         }
-
+        
         return final_auth_value;
     }
 

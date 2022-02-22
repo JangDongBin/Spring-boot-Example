@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         web.ignoring()
             .mvcMatchers("/css/**")
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-             //임의의 위치에 대해서 검증자체를 하지않음.
+            //임의의 위치에 대해서 검증자체를 하지않음.
             //필터 자체를 없애버림
     }
 

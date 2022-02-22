@@ -59,12 +59,12 @@ public class Account {
     @UpdateTimestamp
     private LocalDateTime updateTimestamp;
 
+    // join table name
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "securityJoinTable", // join table name
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "roleid")
+    @JoinTable(name = "securityJoinTable",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "roleid")
     )
     List<Role> roles = new ArrayList<>();
     
-    Role tempRole = roles.get(1);
 }
