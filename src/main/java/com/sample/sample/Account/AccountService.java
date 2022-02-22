@@ -49,24 +49,37 @@ public class AccountService {
                     .build();
         } else {
             newAccount = Account.builder()
-                .id(AccountForm.getId())
-                .userid(AccountForm.getUseridField())
-                .password(passwordEncoderProcess(AccountForm.getPasswordField()))
-                .name(AccountForm.getNameField())
-                .tel(AccountForm.getTelField())
-                .email(AccountForm.getEmailField())
-                .build();
+                    .id(AccountForm.getId())
+                    .userid(AccountForm.getUseridField())
+                    .password(passwordEncoderProcess(AccountForm.getPasswordField()))
+                    .name(AccountForm.getNameField())
+                    .tel(AccountForm.getTelField())
+                    .email(AccountForm.getEmailField())
+                    .build();
         }
 
-        //accountRepository.save(newAccount);
+        accountRepository.save(newAccount);
         return newAccount;
     }
 
-    public String passwordEncoderProcess(String password){
+    public String passwordEncoderProcess(String password) {
         BCryptPasswordEncoder encode = new BCryptPasswordEncoder();
         String secure_pw = encode.encode(password);
         return secure_pw;
     }
 
-    
+    public String authority_value_setting(int auth_value) {
+        Authority_Value value_arr[] = Authority_Value.values();
+        String final_auth_value = "";
+        String temp_auth_value;
+        for (int i = 0; i < auth_value; i++) {
+            temp_auth_value = value_arr[i].toString();
+            final_auth_value.concat(temp_auth_value);
+        }
+
+        System.out.println(final_auth_value);
+
+        return "";
+    }
+
 }
