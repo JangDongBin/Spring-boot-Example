@@ -61,17 +61,24 @@ public class Account {
     @UpdateTimestamp
     private LocalDateTime updateTimestamp;
 
+<<<<<<< HEAD
     @PostPersist
     public void creationEmailTokenValue() { //인증 값 생성
         this.EmailToken = UUID.randomUUID().toString();
     }
 
+=======
+    // join table name
+>>>>>>> jangbongbin
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "securityJoinTable", // join table name
-            joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "roleid")
+    @JoinTable(name = "securityJoinTable",
+        joinColumns = @JoinColumn(name = "userid"),
+        inverseJoinColumns = @JoinColumn(name = "roleid")
     )
     List<Role> roles = new ArrayList<>();/* 
     
+<<<<<<< HEAD
     Role tempRole = roles.get(1); */
+=======
+>>>>>>> jangbongbin
 }
