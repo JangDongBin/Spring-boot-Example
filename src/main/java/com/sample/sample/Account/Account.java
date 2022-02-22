@@ -3,6 +3,7 @@ package com.sample.sample.Account;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PostPersist;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -59,12 +61,17 @@ public class Account {
     @UpdateTimestamp
     private LocalDateTime updateTimestamp;
 
+    @PostPersist
+    public void creationEmailTokenValue() { //인증 값 생성
+        this.EmailToken = UUID.randomUUID().toString();
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "securityJoinTable", // join table name
             joinColumns = @JoinColumn(name = "userid"),
             inverseJoinColumns = @JoinColumn(name = "roleid")
     )
-    List<Role> roles = new ArrayList<>();
+    List<Role> roles = new ArrayList<>();/* 
     
-    Role tempRole = roles.get(1);
+    Role tempRole = roles.get(1); */
 }
