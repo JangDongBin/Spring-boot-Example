@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AccountService {
 
     enum Authority_Value { // 계정 등급
@@ -51,7 +53,6 @@ public class AccountService {
         Account newAccount;
 
         if (AccountForm.getId() == null) {
-            System.out.println("1");
             newAccount = Account.builder()
                     .id(null)
                     .userid(AccountForm.getUseridField())
@@ -61,7 +62,6 @@ public class AccountService {
                     .email(AccountForm.getEmailField())
                     .build();
         } else {
-            System.out.println("2");
             newAccount = Account.builder()
                     .id(AccountForm.getId())
                     .userid(AccountForm.getUseridField())
@@ -74,12 +74,12 @@ public class AccountService {
 
         accountRepository.save(newAccount);
         
-        System.out.println(role_update_process(newAccount, 2));
+        role_update_process(newAccount, 2);
         return newAccount;
     }
 
     // 권한 업데이트
-    public Role role_update_process(Account newAccount, int level) {
+    public void role_update_process(Account newAccount, int level) {
         Role newRole;
         if (newAccount.getId() == null) {
             newRole = Role.builder()
@@ -94,7 +94,6 @@ public class AccountService {
         }
 
         roleRepositroy.save(newRole);
-        return newRole;
     }
 
     // 권한 등급 설정
