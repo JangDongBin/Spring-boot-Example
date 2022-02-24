@@ -16,15 +16,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .mvcMatchers("/account/add").permitAll()
+            .mvcMatchers("/","/login","/account/sign-up").permitAll()
             .anyRequest().authenticated();
 
-
-                // form login
+        // form login
         http.formLogin()
-            .loginPage("/account/login").permitAll();
-    
-            // form logout
+            .loginPage("/login").permitAll();
+
+        // form logout
         http.logout()
             .logoutSuccessUrl("/");
     }

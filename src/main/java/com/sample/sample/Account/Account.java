@@ -1,4 +1,4 @@
-package com.sample.sample.Account;
+package com.sample.sample.account;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,67 +9,56 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.PostPersist;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "ACCOUNT")
+@EqualsAndHashCode(of = "id")
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Account {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String userid;
+    @Column(unique = true)
+    private String nickname;
 
-    @Column(nullable = false, length = 600)
     private String password;
 
-    @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false, length = 30)
-    private String tel;
+    private String emailAddress;
 
-    @Column(nullable = false, length = 30)
-    private String email;
+    private boolean emailVerified;
 
-    @Column
-    private String EmailToken;
+    private String emailCheckToken;
 
-    @Column(columnDefinition = "boolean default false")
-    private Boolean EmailTokenCheck;
+    private LocalDateTime emailCheckTokenGeneratedAt;
 
-    @CreationTimestamp
-    private LocalDateTime creationTimestamp;
-
-    @UpdateTimestamp
-    private LocalDateTime updateTimestamp;
-
-    @PostPersist
-    public void creationEmailTokenValue() { //인증 값 생성
-        this.EmailToken = UUID.randomUUID().toString();
-    }
+    private LocalDateTime joinedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "securityJoinTable",
-        joinColumns = @JoinColumn(name = "userid"),
-        inverseJoinColumns = @JoinColumn(name = "roleid")
+    @JoinTable(
+        name = "authority", 
+        joinColumns = @JoinColumn(name = "accountId"),
+        inverseJoinColumns = @JoinColumn(name = "roleId")
     )
-    List<Role> roles = new ArrayList<>();
+    List<AccountRole> roles = new ArrayList<>();
+
+    public void generateEmailCheckToken() { // RANDOM TOKEN 생성
+        this.emailCheckToken = UUID.randomUUID().toString();
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+    }
 }
