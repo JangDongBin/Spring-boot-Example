@@ -8,14 +8,24 @@
     <title>Document</title>
 </head>
 
+<header th:replace="fragments/header.html"></header>
+
 <body>
-    <h1>index</h1>
+    <div class="container">
+        <h1>HOME</h1>
+        <div class="row mb-3">
+            <a class="form-control" href="/account/sign-up">회원가입하러가기</a> <br />
+        </div>
 
-    회원가입 : <a href="/account/sign-up">회원가입하러가기</a> <br />
-    로그인 : <a href="/login">로그인하러가기</a> <br />
+        <div class="row mb-3">
+            <a class="form-control" href="/login">로그인하러가기</a> <br />
+        </div>
 
-    <a href="/account/principal" sec:isAuthenticated()>인증정보 확인</a>
+        <div class="row mb-3">
+            <a class="form-control" href="/account/principal" sec:isAuthenticated()>인증정보 확인</a>
+        </div>
 
+    </div>
 </body>
 
 </html>

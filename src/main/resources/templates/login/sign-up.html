@@ -8,14 +8,31 @@
     <title>회원가입</title>
 </head>
 
+<header th:replace="fragments/header.html"></header>
+
 <body>
-    <form th:action="@{/account/sign-up}" method="post">
-        아이디 : <input type="text" name="userid" id="">
-        비밀번호 : <input type="password" name="password" value="">
-        이름 : <input type="text" name="name">
-        이메일 : <input type="text" name="emailAddress">
-        <input type="submit" value="가입하기">
-    </form>
+    <div class="container">
+        <form th:action="@{/account/sign-up}" method="post">
+            <hr class="my-4">
+            <div class="row mb-3">
+                아이디<input class="form-control" type="text" name="userid" id="">
+            </div>
+
+            <div class="row mb-3">
+                비밀번호<input class="form-control" type="password" name="password" value="">
+            </div>
+
+            <div class="row mb-3">
+                이름<input class="form-control" type="text" name="name">
+            </div>
+
+            <div class="row mb-3">
+                이메일<input class="form-control" type="text" name="emailAddress">
+            </div>
+
+            <input class="btn btn-primary btn-lg btn-block" type="submit" value="가입하기">
+        </form>
+    </div>
 </body>
 
 </html>
