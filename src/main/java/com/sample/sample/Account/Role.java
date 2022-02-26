@@ -11,18 +11,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity(name = "ACCOUNT_ROLE")
+@Entity(name = "ROLE")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AccountRole {
+public class Role {
 
     @Id @GeneratedValue
     private Long id;
 
-    private String rolename;
-
     @Column(unique = true)
-    private String role;
+    private String authority;
 
 }

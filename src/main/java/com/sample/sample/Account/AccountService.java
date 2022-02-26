@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,63 +25,62 @@ public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AccountRoleRepository accountRoleRepository;
+    private final RoleRepository roleRepository;
 
-    // 회원가입 처리
-    public void signUp(SignUpForm signUpForm) {
+    // 계정 model
+    public void detailProcess(Model model) {
+        model.addAttribute("accountForm", new AccountForm());
+    }
 
-        List<AccountRole> roles = new ArrayList<>();
+    // 계정 업데이트
+    public void updateProcess(AccountForm AccountForm) {
 
-        Optional<AccountRole> accountRole = accountRoleRepository.findById(3l);
+        List<Role> roles = new ArrayList<>();
+
+        Optional<Role> accountRole = roleRepository.findById(1l);
 
         accountRole.ifPresent(role -> {
-
-            AccountRole ROLE_USER = AccountRole.builder()
+            Role ROLE_USER = Role.builder()
                     .id(role.getId())
-                    .rolename(role.getRolename())
-                    .role(role.getRole())
+                    .authority(role.getAuthority())
                     .build();
 
             roles.add(ROLE_USER);
 
             Account newAccount = Account.builder()
-                    .nickname(signUpForm.getUserid())
-                    .password(passwordEncoder.encode(signUpForm.getPassword()))
-                    .name(signUpForm.getName())
-                    .emailAddress(signUpForm.getEmailAddress())
+                    .userid(AccountForm.getUseridField())
+                    .password(passwordEncoder.encode(AccountForm.getPasswordField()))
+                    .name(AccountForm.getNameField())
+                    .tel(AccountForm.getTelField())
+                    .email(AccountForm.getEmailField())
                     .roles(roles)
                     .build();
 
-            System.out.println("AccountRepository = " + newAccount);
             accountRepository.save(newAccount);
         });
-
     }
 
-    // security DB connect
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Account account = accountRepository.findByNickname(username);
-
+    public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
+        Account account = accountRepository.findByUserid(userid);
         if (account == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(userid);
         }
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
         account.getRoles().forEach(e -> {
-            authorities.add(new SimpleGrantedAuthority(e.getRole()));
+            authorities.add(new SimpleGrantedAuthority(e.getAuthority()));
         });
 
         return new UserAccount(account, authorities);
     }
 
-    // 로그인
     public void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(new UserAccount(account),
                 account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(token);
     }
+
 }

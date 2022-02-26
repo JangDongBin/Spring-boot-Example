@@ -33,7 +33,7 @@ public class Account {
     private Long id;
 
     @Column(unique = true)
-    private String nickname;
+    private String userid;
 
     private String password;
 
@@ -49,16 +49,16 @@ public class Account {
 
     private LocalDateTime joinedAt;
 
+    @PostPersist
+    public void creationEmailTokenValue() { //인증 값 생성
+        this.EmailToken = UUID.randomUUID().toString();
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "authority", 
         joinColumns = @JoinColumn(name = "accountId"),
         inverseJoinColumns = @JoinColumn(name = "roleId")
     )
-    List<AccountRole> roles = new ArrayList<>();
-
-    public void generateEmailCheckToken() { // RANDOM TOKEN 생성
-        this.emailCheckToken = UUID.randomUUID().toString();
-        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
-    }
+    List<Role> roles = new ArrayList<>();
 }

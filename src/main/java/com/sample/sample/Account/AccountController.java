@@ -16,22 +16,40 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    //회원가입창
-    @GetMapping("/sign-up")
-    public String signUpPage(Model model){
-        model.addAttribute("SignUpForm", new SignUpForm());
-        return "login/sign-up";
+    @GetMapping("/add")
+    public String Account_Add(Model model) {
+        accountService.detailProcess(model);
+        return "account/accountAdd";
     }
 
     //회원가입처리
-    @PostMapping("/sign-up")
-    public String signUp(SignUpForm signUpForm, Model model, Errors errors){
+    @PostMapping("/add")
+    public String Account_add_Post(AccountForm accountForm, Model model, Errors errors){
         if(errors.hasErrors()){
             return "login/sign-up";
         }
-        System.out.println("form = "+signUpForm);
-        accountService.signUp(signUpForm);
-        return "redirect:/";
+        // Form 값 확인
+        //System.out.println(accountForm.getUseridField());
+        //System.out.println(accountForm.getPasswordField());
+        //System.out.println(accountService.passwordEncoderProcess(accountForm.getPasswordField()));//pw암호화 확인
+        //System.out.println(accountForm.getNameField());
+        //System.out.println(accountForm.getTelField());
+        //System.out.println(accountForm.getEmailField());
+        
+        accountService.updateProcess(accountForm);
+
+        return "account/accountCheck";
+    }
+/*
+    @GetMapping("/main")
+    public String Account_main(Model model, @RequestParam(required = false) Long id) {
+        accountService.detailProcess(model, id);
+        return "account/accountAdd";
+    }
+
+    @GetMapping("/login")
+    public String Account_login(Model model, @RequestParam(required = false) Long id) {        
+        return "account/accountLogin";
     }
 
     //권한확인
@@ -39,5 +57,7 @@ public class AccountController {
     public String principal(){  
         return "login/principal";
     }
-    
+
+*/
+
 }
