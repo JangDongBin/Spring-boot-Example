@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class AccountFormValidator implements Validator{
-    private final AccountRepositroy accountRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public boolean supports(Class<?> clazz){

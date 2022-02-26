@@ -1,4 +1,4 @@
-package com.sample.sample.Account;
+package com.sample.sample.account;
 
 import java.util.List;
 

@@ -1,11 +1,15 @@
 package com.sample.sample.account;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +19,12 @@ import lombok.RequiredArgsConstructor;
 public class AccountController {
 
     private final AccountService accountService;
+    private final AccountFormValidator accountFormValidator;
+
+    @InitBinder("AccountForm")
+    public void InitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(accountFormValidator);
+    }
 
     @GetMapping("/add")
     public String Account_Add(Model model) {
@@ -24,21 +34,20 @@ public class AccountController {
 
     //회원가입처리
     @PostMapping("/add")
-    public String Account_add_Post(AccountForm accountForm, Model model, Errors errors){
+    public String Account_add_Post(@Valid AccountForm accountForm, Model model, Errors errors){
         if(errors.hasErrors()){
-            return "login/sign-up";
+            return "account/accountAdd";
         }
-        // Form 값 확인
-        //System.out.println(accountForm.getUseridField());
-        //System.out.println(accountForm.getPasswordField());
-        //System.out.println(accountService.passwordEncoderProcess(accountForm.getPasswordField()));//pw암호화 확인
-        //System.out.println(accountForm.getNameField());
-        //System.out.println(accountForm.getTelField());
-        //System.out.println(accountForm.getEmailField());
         
         accountService.updateProcess(accountForm);
 
         return "account/accountCheck";
+    }
+
+    //권한 확인
+    @GetMapping("/principal")
+    public String principal(){
+        return "account/principal";
     }
 /*
     @GetMapping("/main")

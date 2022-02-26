@@ -1,6 +1,5 @@
 package com.sample.sample.account;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PostPersist;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,19 +39,15 @@ public class Account {
 
     private String name;
 
-    private String emailAddress;
+    private String tel;
 
-    private boolean emailVerified;
+    private String email;
 
-    private String emailCheckToken;
-
-    private LocalDateTime emailCheckTokenGeneratedAt;
-
-    private LocalDateTime joinedAt;
+    private String emailToken;
 
     @PostPersist
     public void creationEmailTokenValue() { //인증 값 생성
-        this.EmailToken = UUID.randomUUID().toString();
+        this.emailToken = UUID.randomUUID().toString();
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
