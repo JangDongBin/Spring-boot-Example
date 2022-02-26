@@ -16,16 +16,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .mvcMatchers("/","/login","/account/sign-up").permitAll()
+            .mvcMatchers("/account/add").permitAll()
             .anyRequest().authenticated();
-
-        // form login
-        http.formLogin()
-            .loginPage("/login").permitAll();
-
-        // form logout
-        http.logout()
-            .logoutSuccessUrl("/");
     }
 
     @Override
@@ -33,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         web.ignoring()
             .mvcMatchers("/css/**")
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-            //임의의 위치에 대해서 검증자체를 하지않음.
+             //임의의 위치에 대해서 검증자체를 하지않음.
             //필터 자체를 없애버림
     }
     

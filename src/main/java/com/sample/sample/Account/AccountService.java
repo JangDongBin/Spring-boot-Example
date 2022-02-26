@@ -51,7 +51,6 @@ public class AccountService implements UserDetailsService {
                     .userid(AccountForm.getUseridField())
                     .password(passwordEncoder.encode(AccountForm.getPasswordField()))
                     .name(AccountForm.getNameField())
-                    .tel(AccountForm.getTelField())
                     .email(AccountForm.getEmailField())
                     .roles(roles)
                     .build();
