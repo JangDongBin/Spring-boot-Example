@@ -14,6 +14,5 @@ public class AccountForm {
     private String useridField;
     private String passwordField;
     private String nameField;
-    private String telField;
     private String emailField;
 }

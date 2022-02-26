@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Role {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Column(unique = true)

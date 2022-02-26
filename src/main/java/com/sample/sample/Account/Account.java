@@ -51,10 +51,6 @@ public class Account {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "authority", 
-        joinColumns = @JoinColumn(name = "accountId"),
-        inverseJoinColumns = @JoinColumn(name = "roleId")
-    )
+    @JoinTable(name = "account_role_join_table", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     List<Role> roles = new ArrayList<>();
 }
