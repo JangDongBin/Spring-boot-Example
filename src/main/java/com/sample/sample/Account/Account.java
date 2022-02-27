@@ -43,18 +43,8 @@ public class Account {
 
     private String email;
 
-   
-    @Column
-    private String EmailToken;
-
-    @Column(columnDefinition = "boolean default false")
-    private Boolean EmailTokenCheck;
-
-    @CreationTimestamp
-    private LocalDateTime creationTimestamp;
-
-    @UpdateTimestamp
-    private LocalDateTime updateTimestamp;
+    private String emailToken;
+    //박준호 병맛
 
     @PostPersist
     public void creationEmailTokenValue() { //인증 값 생성
