@@ -12,26 +12,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .mvcMatchers("/account/add").permitAll()
-            .anyRequest().authenticated();
+                .mvcMatchers("/", "/account/login", "/account/add").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                    .loginPage("/account/login").defaultSuccessUrl("/").permitAll()
+                .and()
+                .logout()
+                    .logoutSuccessUrl("/");
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception{
+    public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-            .mvcMatchers("/css/**")
-            .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-             //임의의 위치에 대해서 검증자체를 하지않음.
-            //필터 자체를 없애버림
+                .mvcMatchers("/css/**")
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        // 임의의 위치에 대해서 검증자체를 하지않음.
+        // 필터 자체를 없애버림
     }
-    
 
     @Bean
-    public PasswordEncoder PasswordEncoder(){
+    public PasswordEncoder PasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

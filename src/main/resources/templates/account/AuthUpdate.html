@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계정 업데이트</title>
+</head>
+<header th:replace="fragments/header.html"></header>
+
+<body>
+
+
+    <div class="container">
+        <hr class="my-4">
+        <h2>계정 권한 업데이트</h2>
+        <h3>현재 계정 권한 종류</h3>
+            <span sec:authentication="principal.authorities"></span>
+
+        <form>
+            
+        </form>
+    </div>
+
+
+</body>
+
+</html>

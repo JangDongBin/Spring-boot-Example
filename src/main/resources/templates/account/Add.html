@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
@@ -12,22 +12,22 @@
 
 <body>
     <div class="container">
-        <form th:action="@{/account/sign-up}" th:object="${SignUpForm}" method="post" >
+        <form th:action="@{/account/add}" th:object="${accountForm}" method="post">
             <hr class="my-4">
             <div class="row mb-3">
-                아이디<input class="form-control" type="text" name="" id="" th:field="*{userid}">
+                아이디<input class="form-control" type="text" name="" id="" th:field="*{useridField}">
             </div>
 
             <div class="row mb-3">
-                비밀번호<input class="form-control" type="password" name="" th:field="*{password}">
+                비밀번호<input class="form-control" type="password" name="" th:field="*{passwordField}">
             </div>
 
             <div class="row mb-3">
-                이름<input class="form-control" type="text" name="" th:field="*{name}">
+                이름<input class="form-control" type="text" name="" th:field="*{nameField}">
             </div>
 
             <div class="row mb-3">
-                이메일<input class="form-control" type="text" name="" th:field="*{emailAddress}">
+                이메일<input class="form-control" type="text" name="" th:field="*{emailField}">
             </div>
 
             <input class="btn btn-primary btn-lg btn-block" type="submit" value="가입하기">

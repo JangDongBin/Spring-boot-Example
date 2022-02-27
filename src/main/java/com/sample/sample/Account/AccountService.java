@@ -2,7 +2,6 @@ package com.sample.sample.account;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,26 +36,17 @@ public class AccountService implements UserDetailsService {
 
         List<Role> roles = new ArrayList<>();
 
-        Optional<Role> accountRole = roleRepository.findById(1l);
+        roles = roleRepository.findAll();
 
-        accountRole.ifPresent(role -> {
-            Role ROLE_USER = Role.builder()
-                    .id(role.getId())
-                    .authority(role.getAuthority())
-                    .build();
+        Account newAccount = Account.builder()
+                .userid(AccountForm.getUseridField())
+                .password(passwordEncoder.encode(AccountForm.getPasswordField()))
+                .name(AccountForm.getNameField())
+                .email(AccountForm.getEmailField())
+                .roles(roles)
+                .build();
 
-            roles.add(ROLE_USER);
-
-            Account newAccount = Account.builder()
-                    .userid(AccountForm.getUseridField())
-                    .password(passwordEncoder.encode(AccountForm.getPasswordField()))
-                    .name(AccountForm.getNameField())
-                    .email(AccountForm.getEmailField())
-                    .roles(roles)
-                    .build();
-
-            accountRepository.save(newAccount);
-        });
+        accountRepository.save(newAccount);
     }
 
     @Override
@@ -77,7 +67,7 @@ public class AccountService implements UserDetailsService {
 
     public void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(new UserAccount(account),
-                account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                account.getPassword(), List.of(new SimpleGrantedAuthority("USER")));
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(token);
     }

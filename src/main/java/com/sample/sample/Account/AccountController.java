@@ -26,42 +26,39 @@ public class AccountController {
         webDataBinder.addValidators(accountFormValidator);
     }
 
+    // 회원가입 폼
     @GetMapping("/add")
-    public String Account_Add(Model model) {
+    public String account_Add(Model model) {
         accountService.detailProcess(model);
-        return "account/accountAdd";
+        return "account/Add";
     }
 
     // 회원가입처리
     @PostMapping("/add")
-    public String Account_add_Post(AccountForm accountForm, Model model, Errors errors) {
+    public String account_add_Post(@Valid AccountForm accountForm, Model model, Errors errors) {
         if (errors.hasErrors()) {
-            return "account/accountAdd";
+            return "account/Add";
         }
         accountService.updateProcess(accountForm);
-        return "account/accountCheck";
+        return "redirect:/";
     }
-    /*
-     * @GetMapping("/main")
-     * public String Account_main(Model model, @RequestParam(required = false) Long
-     * id) {
-     * accountService.detailProcess(model, id);
-     * return "account/accountAdd";
-     * }
-     * 
-     * @GetMapping("/login")
-     * public String Account_login(Model model, @RequestParam(required = false) Long
-     * id) {
-     * return "account/accountLogin";
-     * }
-     * 
-     * //권한확인
-     * 
-     * @GetMapping("/principal")
-     * public String principal(){
-     * return "login/principal";
-     * }
-     * 
-     */
+
+    // 로그인
+    @GetMapping("/login")
+    public String login() {
+        return "account/login";
+    }
+
+    // 권한 업데이트
+    @GetMapping("/update")
+    public String auth_update(){
+        return "account/AuthUpdate";
+    }
+
+    // 권한확인
+    @GetMapping("/principal")
+    public String principal() {
+        return "account/principal";
+    }
 
 }
