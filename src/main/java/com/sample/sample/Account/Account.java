@@ -44,6 +44,7 @@ public class Account {
     private String email;
 
     private String emailToken;
+    //박준호 병맛
 
     @PostPersist
     public void creationEmailTokenValue() { //인증 값 생성
