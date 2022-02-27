@@ -43,7 +43,18 @@ public class Account {
 
     private String email;
 
-    private String emailToken;
+   
+    @Column
+    private String EmailToken;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean EmailTokenCheck;
+
+    @CreationTimestamp
+    private LocalDateTime creationTimestamp;
+
+    @UpdateTimestamp
+    private LocalDateTime updateTimestamp;
 
     @PostPersist
     public void creationEmailTokenValue() { //인증 값 생성
