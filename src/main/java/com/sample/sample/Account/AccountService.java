@@ -39,9 +39,20 @@ public class AccountService implements UserDetailsService {
 
     public void mailSend(String email,String username, String token, String useridval) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        
         simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject("장봐요 인증메일입니다.");
-        simpleMailMessage.setText(username + "의 인증메일 입니다.\n\n\nlocalhost:8080/account/signup?token=" + token + "&userid=" + useridval);
+        /* simpleMailMessage.setText(username + "의 인증메일 입니다.\n\n\n<a href= 'localhost:8080/account/signup?token=" + token + "&userid=" + useridval + "'</a>"); */
+        simpleMailMessage.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+                .append(username)
+                .append("님! 장봐요에 가입해주셔서 감사합니다!")
+				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+				.append("<a href='http://localhost:8080/account/signup?token=")
+				.append(token)
+				.append("&userid=")
+				.append(useridval)
+				.append("' target='_blenk'>이메일 인증 확인</a>")
+				.toString());
     
         javaMailSender.send(simpleMailMessage);
         System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
