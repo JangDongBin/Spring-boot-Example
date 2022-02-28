@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>권한확인</title>
+</head>
+
+<header th:replace="fragments/header.html"></header>
+
+<body>
+    <div class="container">
+        <hr class="my-4">
+        <h2>[principal]</h2>
+        <span sec:authentication="principal"></span>
+
+        <h2>[name]</h2>
+        <span sec:authentication="name"></span>
+
+        <h2>[roles]</h2>
+        <span sec:authentication="principal.authorities"></span>
+
+        <h6 sec:isAuthenticated()>당신은 인증받았습니다.</h6>
+        <security:authorize access="hasAnyRole('USER', 'ADMIN', 'MASTER')">
+            <div>
+                <h6>당신은 USER 입니다.</h6>
+                <h6>당신은 ADMIN 입니다.</h6>
+                <h6>당신은 MASTER 입니다.</h6>
+            </div>
+        </security:authorize>
+    </div>
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

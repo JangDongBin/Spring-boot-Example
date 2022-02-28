@@ -1,120 +1,100 @@
-package com.sample.sample.Account;
+package com.sample.sample.account;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import lombok.RequiredArgsConstructor;
 
-@Service
-@RequiredArgsConstructor
-public class AccountService {
 
-    enum Authority_Value { // 계정 등급
-        NoAuth,
-        Iron,
-        Bronze,
-        Silver,
-        Gold
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class AccountService implements UserDetailsService {
+
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final JavaMailSender javaMailSender;    
+    //@Value("${spring.mail.username}")
+    //private final String sendFrom;
+
+    public void mailSend(String email,String username, String token, String useridval) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(email);
+        simpleMailMessage.setSubject("장봐요 인증메일입니다.");
+        simpleMailMessage.setText(username + "의 인증메일 입니다.\n\n\nlocalhost:8080/account/signup?token=" + token + "&userid=" + useridval);
+    
+        javaMailSender.send(simpleMailMessage);
+        System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
     }
 
-    private final AccountRepositroy accountRepository; // 계정 레파지토리
-    private final RoleRepositroy roleRepositroy; // 권한 레파지토리
-    private final PasswordEncoder passwordEncoder;
-
-    // 계정 상세보기
-    public void detailProcess(Model model, Long id) {
-        if (id != null) {
-            Optional<Account> account = accountRepository.findById(id);
-
-            if (account.isPresent()) {
-                AccountForm accountForm = AccountForm.builder()
-                        .id(account.get().getId())
-                        .useridField(account.get().getUserid())
-                        .passwordField(account.get().getPassword())
-                        .nameField(account.get().getName())
-                        .telField(account.get().getTel())
-                        .emailField(account.get().getEmail())
-                        .build();
-                
-                model.addAttribute("accountForm", accountForm);
-            }
-        } else {
-            model.addAttribute("accountForm", new AccountForm());
-        }
+    // 계정 model
+    public void detailProcess(Model model) {
+        model.addAttribute("accountForm", new AccountForm());
     }
 
     // 계정 업데이트
-    public Account updateProcess(AccountForm AccountForm) {
-        Account newAccount;
+    public void updateProcess(AccountForm AccountForm) {
 
-        if (AccountForm.getId() == null) {
-            System.out.println("1");
-            newAccount = Account.builder()
-                    .id(null)
-                    .userid(AccountForm.getUseridField())
-                    .password(passwordEncoder.encode(AccountForm.getPasswordField()))
-                    .name(AccountForm.getNameField())
-                    .tel(AccountForm.getTelField())
-                    .email(AccountForm.getEmailField())
-                    .build();
-        } else {
-            System.out.println("2");
-            newAccount = Account.builder()
-                    .id(AccountForm.getId())
-                    .userid(AccountForm.getUseridField())
-                    .password(passwordEncoder.encode(AccountForm.getPasswordField()))
-                    .name(AccountForm.getNameField())
-                    .tel(AccountForm.getTelField())
-                    .email(AccountForm.getEmailField())
-                    .build();
-        }
+        List<Role> roles = new ArrayList<>();
 
+        roles = roleRepository.findAll();
+
+        Account newAccount = Account.builder()
+                .userid(AccountForm.getUseridField())
+                .password(passwordEncoder.encode(AccountForm.getPasswordField()))
+                .name(AccountForm.getNameField())
+                .email(AccountForm.getEmailField())
+                .roles(roles)                
+                .build();
+
+        newAccount.creationEmailTokenValue();
+        //이메일 변경 해주세요 제발 히잉
+        mailSend("ggb04212@naver.com",newAccount.getName() ,newAccount.getEmailToken(), newAccount.getUserid()); 
         accountRepository.save(newAccount);
-        
-        System.out.println(role_update_process(newAccount, 2));
-        return newAccount;
+
     }
 
-    // 권한 업데이트
-    public Role role_update_process(Account newAccount, int level) {
-        Role newRole;
-        if (newAccount.getId() == null) {
-            newRole = Role.builder()
-                    .id(null)
-                    .authority(authority_value_setting(level)) // 권한 등급 설정
-                    .build();
-        } else {
-            newRole = Role.builder()
-                    .id(newAccount.getId())
-                    .authority(authority_value_setting(level)) // 권한 등급 설정
-                    .build();
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
+        Account account = accountRepository.findByUserid(userid);
+        if (account == null) {
+            throw new UsernameNotFoundException(userid);
         }
 
-        roleRepositroy.save(newRole);
-        return newRole;
+        List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+        account.getRoles().forEach(e -> {
+            authorities.add(new SimpleGrantedAuthority(e.getAuthority()));
+        });
+
+        return new UserAccount(account, authorities);
     }
 
-    // 권한 등급 설정
-    public String authority_value_setting(int auth_value) {
-        Authority_Value value_arr[] = Authority_Value.values();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        String temp_auth_value;
-        String final_auth_value = "";
-
-        for (int i = 1; i <= auth_value; i++) {
-            temp_auth_value = value_arr[i].toString();
-            stringBuilder.append(temp_auth_value);
-            if(i != auth_value)
-                stringBuilder.append(", ");
-            final_auth_value = stringBuilder.toString();
-        }
-
-        return final_auth_value;
+    public void login(Account account) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(new UserAccount(account),
+                account.getPassword(), List.of(new SimpleGrantedAuthority("USER")));
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(token);
     }
 
-    
 }

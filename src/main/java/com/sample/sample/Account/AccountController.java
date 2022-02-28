@@ -1,74 +1,74 @@
-package com.sample.sample.Account;
+package com.sample.sample.account;
+
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/account")
+@RequiredArgsConstructor
 public class AccountController {
-    private final AccountRepositroy accountRepository;
+
     private final AccountService accountService;
     private final AccountFormValidator accountFormValidator;
 
-    @InitBinder("accountForm")
+    @InitBinder("AccountForm")
     public void InitBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(accountFormValidator);
     }
 
+    // 회원가입 폼
     @GetMapping("/add")
-    public String Account_Add(Model model, @RequestParam(required = false) Long id) {
-        accountService.detailProcess(model, id);
-        return "account/accountAdd";
+    public String account_Add(Model model) {
+        accountService.detailProcess(model);
+        return "account/Add";
     }
 
+    // 회원가입처리
     @PostMapping("/add")
-    public String Post_Account_Add(@Valid AccountForm accountForm, Errors errors, Model model) {
+    public String account_add_Post(@Valid AccountForm accountForm, Model model, Errors errors) {
         if (errors.hasErrors()) {
-            return "account/accountAdd";
+            return "account/Add";
         }
-        // Form 값 확인
-        //System.out.println(accountForm.getUseridField());
-        //System.out.println(accountForm.getPasswordField());
-        //System.out.println(accountService.passwordEncoderProcess(accountForm.getPasswordField()));//pw암호화 확인
-        //System.out.println(accountForm.getNameField());
-        //System.out.println(accountForm.getTelField());
-        //System.out.println(accountForm.getEmailField());
-        
         accountService.updateProcess(accountForm);
 
-        return "account/accountCheck";
+
+        return "redirect:/";
     }
 
-    @GetMapping("/main")
-    public String Account_main(Model model, @RequestParam(required = false) Long id) {
-        accountService.detailProcess(model, id);
-        return "account/accountAdd";
-    }
-
+    // 로그인
     @GetMapping("/login")
-    public String Account_login(Model model, @RequestParam(required = false) Long id) {        
-        return "account/accountLogin";
+    public String login() {
+        return "account/login";
     }
 
+    //인증메일 Check
     @GetMapping("/signup")
-    public String Account_signup(Model model, @RequestParam(required = false) Long id) {        
-        
-        
-        return "account/accountLogin";
+    public String token_check() {
+        return "account/login";
     }
 
+    // 권한 업데이트
+    @GetMapping("/update")
+    public String auth_update(){
+        return "account/AuthUpdate";
+    }
 
+    // 권한확인
+    @GetMapping("/principal")
+    public String principal() {
+        return "account/principal";
+    }
 
 }

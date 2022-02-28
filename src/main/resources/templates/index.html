@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연습 페이지</title>
+</head>
+
+<header th:replace="fragments/header.html"></header>
+
+<body>
+    <div class="container">
+        <h1>HOME</h1>
+        <div class="row mb-3">
+            <a class="form-control" href="/account/add">회원가입하러가기</a> <br />
+        </div>
+
+        <div class="row mb-3">
+            <a class="form-control" href="/account/login">로그인하러가기</a> <br />
+        </div>
+
+        <div class="row mb-3">
+            <a class="form-control" href="/account/principal" sec:isAuthenticated()>인증정보 확인</a>
+        </div>
+
+        <div class="row mb-3">
+            <a class="form-control" href="/account/update" sec:isAuthenticated()>업데이트하러가기</a>
+        </div>
+
+    </div>
+</body>
+
+</html>
