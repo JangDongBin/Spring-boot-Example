@@ -42,12 +42,20 @@ public class AccountController {
             return "account/Add";
         }
         accountService.updateProcess(accountForm);
+
+
         return "redirect:/";
     }
 
     // 로그인
     @GetMapping("/login")
     public String login() {
+        return "account/login";
+    }
+
+    //인증메일 Check
+    @GetMapping("/signup")
+    public String token_check() {
         return "account/login";
     }
 
