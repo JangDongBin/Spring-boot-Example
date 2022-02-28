@@ -44,6 +44,9 @@ public class Account {
     private String email;
 
     private String emailToken;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean emailTokenVaild;
     //박준호 병맛
 
     @PostPersist
