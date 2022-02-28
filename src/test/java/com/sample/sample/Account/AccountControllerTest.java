@@ -25,9 +25,11 @@ public class AccountControllerTest {
     @Test
     public void SignupForm_corrent() throws Exception{
 
-        mockMvc.perform(post("/account/sign-up")
-                .param("userid", "kang")    
-                .param("password", "12341234")
+        mockMvc.perform(post("/account/add")
+                .param("useridField", "test")
+                .param("passwordField", "1111")
+                .param("nameField", "엄복동")
+                .param("emailField", "jangbayooffcial@gmail.com")
                 .with(csrf())
         )
                 .andExpect(status().is3xxRedirection());
