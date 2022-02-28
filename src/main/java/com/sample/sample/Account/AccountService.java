@@ -3,8 +3,6 @@ package com.sample.sample.account;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -16,14 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @Transactional
@@ -33,16 +27,17 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final JavaMailSender javaMailSender;    
-    //@Value("${spring.mail.username}")
-    //private final String sendFrom;
+    private final JavaMailSender javaMailSender;
+    // @Value("${spring.mail.username}")
+    // private final String sendFrom;
 
-    public void mailSend(String email,String username, String token, String useridval) {
+    public void mailSend(String email, String username, String token, String useridval) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject("장봐요 인증메일입니다.");
-        simpleMailMessage.setText(username + "의 인증메일 입니다.\n\n\nlocalhost:8080/account/signup?token=" + token + "&userid=" + useridval);
-    
+        simpleMailMessage.setText(
+                username + "의 인증메일 입니다.\n\n\nlocalhost:8080/account/signup?token=" + token + "&userid=" + useridval);
+
         javaMailSender.send(simpleMailMessage);
         System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
     }
@@ -64,12 +59,12 @@ public class AccountService implements UserDetailsService {
                 .password(passwordEncoder.encode(AccountForm.getPasswordField()))
                 .name(AccountForm.getNameField())
                 .email(AccountForm.getEmailField())
-                .roles(roles)                
+                .roles(roles)
                 .build();
 
         newAccount.creationEmailTokenValue();
-        //이메일 변경 해주세요 제발 히잉
-        mailSend("ggb04212@naver.com",newAccount.getName() ,newAccount.getEmailToken(), newAccount.getUserid()); 
+        // 이메일 변경 해주세요 제발 히잉
+        mailSend("ggb04212@naver.com", newAccount.getName(), newAccount.getEmailToken(), newAccount.getUserid());
         accountRepository.save(newAccount);
 
     }

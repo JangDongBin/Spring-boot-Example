@@ -47,10 +47,9 @@ public class Account {
 
     @Column(columnDefinition = "boolean default false")
     private Boolean emailTokenVaild;
-    //박준호 병맛
 
     @PostPersist
-    public void creationEmailTokenValue() { //인증 값 생성
+    public void creationEmailTokenValue() { // 인증 값 생성
         this.emailToken = UUID.randomUUID().toString();
     }
 

@@ -12,10 +12,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
+// @Transactional //트랜젝션 붙이면 테스트 해보고 롤백됨
 public class AccountControllerTest {
 
     @Autowired
@@ -23,15 +22,14 @@ public class AccountControllerTest {
 
     @DisplayName("회원가입 - 정상")
     @Test
-    public void SignupForm_corrent() throws Exception{
+    public void SignupForm_corrent() throws Exception {
 
         mockMvc.perform(post("/account/add")
                 .param("useridField", "test")
                 .param("passwordField", "1111")
                 .param("nameField", "엄복동")
                 .param("emailField", "jangbayooffcial@gmail.com")
-                .with(csrf())
-        )
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection());
 
     }

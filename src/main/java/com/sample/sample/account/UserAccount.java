@@ -8,15 +8,15 @@ import org.springframework.security.core.userdetails.User;
 import lombok.Getter;
 
 @Getter
-public class UserAccount extends User{
+public class UserAccount extends User {
     private Account account;
 
-    public UserAccount(Account account){
+    public UserAccount(Account account) {
         super(account.getUserid(), account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         this.account = account;
     }
 
-    public UserAccount(Account account, List<SimpleGrantedAuthority> authorities){
+    public UserAccount(Account account, List<SimpleGrantedAuthority> authorities) {
         super(account.getUserid(), account.getPassword(), authorities);
         this.account = account;
     }
