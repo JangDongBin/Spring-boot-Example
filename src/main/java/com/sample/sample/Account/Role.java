@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Role{
 
     @Id
     @GeneratedValue
@@ -23,5 +23,4 @@ public class Role {
 
     @Column(unique = true)
     private String authority;
-
 }
