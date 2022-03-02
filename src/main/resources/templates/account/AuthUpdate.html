@@ -16,10 +16,12 @@
         <hr class="my-4">
         <h2>계정 권한 업데이트</h2>
         <h3>현재 계정 권한 종류</h3>
-            <span sec:authentication="principal.authorities"></span>
-            
-        <form>
-            
+        <span sec:authentication="principal.authorities"></span>
+        <form th:action="@{/account/update}" th:object="${AuthUpdataForm}" method="post">
+            <label><input type="checkbox" name="auth" value="ROLE_TEMPORARY_USER"> 임시사용자</label>
+            <label><input type="checkbox" name="auth" value="ROLE_USER"> 인증사용자</label>
+            <label><input type="checkbox" name="auth" value="ROLE_ADMIN"> 관리자</label>
+            <p><input type="submit" value="업데이트"></p>
         </form>
     </div>
 

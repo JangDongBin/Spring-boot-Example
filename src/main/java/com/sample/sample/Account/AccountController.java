@@ -63,6 +63,12 @@ public class AccountController {
         return "account/AuthUpdate";
     }
 
+    @PostMapping("/update")
+    public String auth_update_Post(AuthUpdateForm authUpdateForm, Model model){
+        System.out.println(authUpdateForm);
+        return "";
+    }
+
     // 권한확인
     @GetMapping("/principal")
     public String principal() {

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountForm {
-
+    private Long id;
     private String useridField;
     private String passwordField;
     private String nameField;

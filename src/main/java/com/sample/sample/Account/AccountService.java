@@ -2,6 +2,7 @@ package com.sample.sample.account;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,12 +44,12 @@ public class AccountService implements UserDetailsService {
         //System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
     }
 
-    // 계정 model
+    // 회원가입
     public void detailProcess(Model model) {
-        model.addAttribute("accountForm", new AccountForm());
+            model.addAttribute("accountForm", new AccountForm());
     }
 
-    // 계정 업데이트
+    // 회원가입
     public void updateProcess(AccountForm AccountForm) {
         List<Role> roles = new ArrayList<>();
         List<Role> temp = new ArrayList<>();
@@ -56,8 +57,6 @@ public class AccountService implements UserDetailsService {
 
         //기본 인증 권한
         temp.add(0, roles.get(0));
-        
-        //권환 관리 페이지에서 체크한 권한 부여.
         
         Account newAccount = Account.builder()
                 .userid(AccountForm.getUseridField())
@@ -68,22 +67,6 @@ public class AccountService implements UserDetailsService {
                 .build();
 
         newAccount.creationEmailTokenValue();
-
-        //email chekc 여부 통해서 권한 부여.
-        /*
-        if(newAccount.getEmailTokenVaild()){
-            temp.add(1,roles.get(1));
-
-            newAccount = Account.builder()
-        //        .id(AccountForm.getId())
-                .userid(AccountForm.getUseridField())
-                .password(passwordEncoder.encode(AccountForm.getPasswordField()))
-                .name(AccountForm.getNameField())
-                .email(AccountForm.getEmailField())
-                .roles(temp)
-                .build();
-        }
-        */
         // 이메일 변경 해주세요 제발 히잉
         //mailSend("ggb04212@naver.com", newAccount.getName(), newAccount.getEmailToken(), newAccount.getUserid());
         
@@ -113,5 +96,23 @@ public class AccountService implements UserDetailsService {
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(token);
     }
+    
+    //권한 업데이트
+    public void auth_update(){
+        //email chekc 여부 통해서 권한 부여.
+        /*
+        if(newAccount.getEmailTokenVaild()){
+            temp.add(1,roles.get(1));
 
+            newAccount = Account.builder()
+        //        .id(AccountForm.getId())
+                .userid(AccountForm.getUseridField())
+                .password(passwordEncoder.encode(AccountForm.getPasswordField()))
+                .name(AccountForm.getNameField())
+                .email(AccountForm.getEmailField())
+                .roles(temp)
+                .build();
+        }
+        */
+    }
 }
