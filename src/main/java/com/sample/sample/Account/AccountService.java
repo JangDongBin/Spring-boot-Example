@@ -33,7 +33,8 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final JavaMailSender javaMailSender;    
+    //private final JavaMailSender javaMailSender;    
+    private final TempMailSender tempMailSender;    
     //@Value("${spring.mail.username}")
     //private final String sendFrom;
 
@@ -54,7 +55,7 @@ public class AccountService implements UserDetailsService {
 				.append("' target='_blenk'>이메일 인증 확인</a>")
 				.toString());
     
-        javaMailSender.send(simpleMailMessage);
+        tempMailSender.send(simpleMailMessage);
         System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
     }
 
