@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,23 +12,22 @@
 <body>
     <div>
 
-        <form class="needs-validation" th:action="@{/test/pwPopup}" method="post" th:object="${pwForm}">
-            <input class="form-control" type="hidden" th:field="*{id}">
-            <div>
-                비밀번호 : <input type='password' th:field="*{PasswordFiled}" />
-            </div>
+
+    <form class="needs-validation" th:action="@{/test/pwPopup}" method="post" th:object="${pwobj}"> 
+        <input class="form-control" type="hidden" th:field="*{id}">  
+        비밀번호 : <input id='pwd' type='password' th:field="*{password}"/>
+    </form>
 
 
-            <div>
-                <button type="submit" class="btn btn-secondary btn-lg">확인</button>
-                <button type="button" class="btn btn-secondary btn-lg" onclick="history.go(-1)">취소</button>
-            </div>
+    <button type="submit" class="btn btn-primary btn-lg">확인</button>
+    <button type="button" class="btn btn-secondary btn-lg" onclick="history.go(-1)">취소</button>
 
-        </form>
-
+    
+      
     </div>
 
-    <footer th:replace="fragments/cm_bottom.html :: foot()"></footer>
-</body>
+   
+    
 
+</body>
 </html>
