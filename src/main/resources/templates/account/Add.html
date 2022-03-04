@@ -14,6 +14,7 @@
     <div class="container">
         <form th:action="@{/account/add}" th:object="${accountForm}" method="post">
             <hr class="my-4">
+            <input type="hidden" th:field="*{id}">
             <div class="row mb-3">
                 아이디<input class="form-control" type="text" name="" id="" th:field="*{useridField}">
             </div>

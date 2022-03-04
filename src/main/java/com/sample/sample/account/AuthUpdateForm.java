@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthUpdateForm {
+    private Long id;
     private Boolean Role_TEMP_USER;
     private Boolean Role_USER;
     private Boolean Role_ADMIN;

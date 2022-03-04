@@ -2,6 +2,8 @@
 <html lang="ko">
 
 <head>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +12,49 @@
 <header th:replace="fragments/header.html"></header>
 
 <body>
-
-
     <div class="container">
         <hr class="my-4">
         <h2>계정 권한 업데이트</h2>
         <h3>현재 계정 권한 종류</h3>
         <span sec:authentication="principal.authorities"></span>
-        <form th:action="@{/account/update}" th:object="${AuthUpdataForm}" method="post">
+        <div class="row mb-3">
             <label><input type="checkbox" name="auth" value="ROLE_TEMPORARY_USER"> 임시사용자</label>
             <label><input type="checkbox" name="auth" value="ROLE_USER"> 인증사용자</label>
             <label><input type="checkbox" name="auth" value="ROLE_ADMIN"> 관리자</label>
-            <p><input type="submit" value="업데이트"></p>
-        </form>
+            <button onclick="btn_click();">저장</button>
+        </div>
     </div>
-
-
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script>
+    function btn_click() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        var chkArray = [];
+        var i = 0;
+
+        $("input[name='auth']:checked").each(function () {
+            var tmpVal = $(this).val();
+            chkArray.push(tmpVal)
+        });
+
+        $.ajax({
+            url: '/account/update',
+            type: "post",
+            traditional: true,
+            data: { "auth": chkArray },
+            dataType: "json",
+            //header에 spring security csrf값 추가해서 보내줘야
+            //403 error가 안뜸
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+            }
+        });
+    }
+</script>
