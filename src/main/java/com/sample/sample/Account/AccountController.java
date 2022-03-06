@@ -53,8 +53,10 @@ public class AccountController {
 
     // 인증메일 Check
     @GetMapping("/signup")
-    public String token_check() {
-        return "account/login";
+    public String token_check(Model model, @RequestParam String token, @RequestParam Long userid) {
+
+        accountService.signupProcess(model, token, userid);
+        return "account/tokencheck";
     }
 
     // 권한 업데이트

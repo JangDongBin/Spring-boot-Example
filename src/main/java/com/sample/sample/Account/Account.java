@@ -53,6 +53,13 @@ public class Account {
         this.emailToken = UUID.randomUUID().toString();
     }
 
+    public void setEmailTokentrue() {
+        this.emailTokenVaild = true;
+    }
+    public void setEmailTokenfalse() {
+        this.emailTokenVaild = false;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role_join_table", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     List<Role> roles = new ArrayList<>();

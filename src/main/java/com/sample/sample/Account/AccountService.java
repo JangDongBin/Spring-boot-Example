@@ -36,7 +36,7 @@ public class AccountService implements UserDetailsService {
     //@Value("${spring.mail.username}")
     //private final String sendFrom;
 
-    public void mailSend(String email, String username, String token, String useridval) {
+    public void mailSend(String email, String username, String token, Long useridval) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         
         simpleMailMessage.setTo(email);
@@ -59,6 +59,7 @@ public class AccountService implements UserDetailsService {
 
     // 회원가입 / 회원 정보 보기
     public void detailProcess(Model model, Long id) {
+    
         if (id != null) {
             Optional<Account> account = accountRepository.findById(id);
 
@@ -69,6 +70,7 @@ public class AccountService implements UserDetailsService {
                         .passwordField(null)
                         .nameField(account.get().getName())
                         .emailField(account.get().getEmail())
+                        .telField(account.get().getTel())
                         .build();
 
                 model.addAttribute("accountForm", accountForm);
@@ -97,6 +99,7 @@ public class AccountService implements UserDetailsService {
                     .password(passwordEncoder.encode(AccountForm.getPasswordField()))
                     .name(AccountForm.getNameField())
                     .email(AccountForm.getEmailField())
+                    .tel(AccountForm.getTelField())
                     .roles(temp)
                     .build();
         } else {
@@ -106,15 +109,18 @@ public class AccountService implements UserDetailsService {
                     .password(passwordEncoder.encode(AccountForm.getPasswordField()))
                     .name(AccountForm.getNameField())
                     .email(AccountForm.getEmailField())
+                    .tel(AccountForm.getTelField())
                     .roles(temp)
                     .build();
         }
         newAccount.creationEmailTokenValue();
+        newAccount.setEmailTokenfalse();
         // 이메일 변경 해주세요 제발 히잉
-        // mailSend("ggb04212@naver.com", newAccount.getName(),
-        // newAccount.getEmailToken(), newAccount.getUserid());
+        
 
         accountRepository.save(newAccount);
+        mailSend("ggb04212@naver.com", newAccount.getName(),
+        newAccount.getEmailToken(), newAccount.getId());
     }
 
     @Override
@@ -179,9 +185,39 @@ public class AccountService implements UserDetailsService {
                 .password(temp1.getPassword())
                 .name(temp1.getName())
                 .email(temp1.getEmail())
+                .tel(temp1.getTel())
                 .roles(temp)
                 .build();
         accountRepository.save(resave_account);
         System.out.println(resave_account);
     }
+
+    public void signupProcess(Model model, String token, Long userid) {
+        if (userid != null) {
+            Optional<Account> Accountop = accountRepository.findById(userid);
+            if (Accountop.get().getEmailToken().equals(token)) {
+                Account newAccount = Accountop.get();
+            
+                newAccount = Account.builder()
+                        .id(newAccount.getId())
+                        .userid(newAccount.getUserid())
+                        .password(newAccount.getPassword())
+                        .name(newAccount.getName())
+                        .email(newAccount.getEmail())
+                        .tel(newAccount.getTel())
+                        .emailToken(newAccount.getEmailToken())
+                        .emailTokenVaild(true)                        
+                        .build(); 
+                accountRepository.save(newAccount);     
+                model.addAttribute("name", newAccount.getName());
+                model.addAttribute("id", newAccount.getId());
+            }else model.addAttribute("error", "worng token!");
+
+        }
+
+        
+    
+    }
+
 }
+

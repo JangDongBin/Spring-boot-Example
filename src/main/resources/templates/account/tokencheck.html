@@ -11,14 +11,25 @@
 <header th:replace="fragments/header.html"></header>
 
 <body>
-    <div class="container">
-        <hr class="my-4">
-        <h2>[인증되었습니다.]</h2>
-
-        
-       
-
-    </div>
+    <main class="container">
+        <div class = "py-5 text-center" th:if="${error}">
+            <p class="lead">장봐요 이메일 확인</p>
+            <div class="alert alert-danger" role="alert">
+                이메일 확인 링크가 정확하지 않습니다.
+            </div>
+        </div>
+    
+    
+        <div class = "py-5 text-center" th:if="${error == null}">
+            <p class="lead">장봐요 이메일 확인</p>
+            <h2>
+                이메일 인증 완료
+                <span th:text="${id}"></span>번째 회원 입니다.<br><br>
+                <span th:text="${name}"></span>님 가입을 축하합니다.<br><br>
+            </h2>
+            <button class="btn btn-outline-success" type="button" onclick="href='/'">메인으로 가기</button>
+        </div>
+      </main>
 </body>
 
 </html>
