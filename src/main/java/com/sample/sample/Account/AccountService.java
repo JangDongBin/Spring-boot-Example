@@ -141,7 +141,7 @@ public class AccountService implements UserDetailsService {
     }
 
     public void auth_update(String[] auth_array) {
-        //현재 세션값을 기준으로 로그인 되어있는 사용자 정보를 불러옴
+        //현재 세션값을 기준으로 사용자 정보를 불러옴
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
 
