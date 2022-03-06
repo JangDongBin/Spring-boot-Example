@@ -61,16 +61,14 @@ public class AccountController {
 
     // 권한 업데이트
     @GetMapping("/update")
-    public String auth_update(Model model) {
-        //accountService.auth_update();
+    public String auth_update() {
         return "account/AuthUpdate";
     }
 
     @PostMapping("/update")
-    public String auth_update_Post(HttpServletRequest req) {
+    public String auth_update_Post(@RequestParam(value = "arr[]") String[] arr) {
         // ajax를 통해 넘어온 배열 데이터 선언
-        String[] arrStr = req.getParameterValues("auth");
-        accountService.auth_update(arrStr);
+        accountService.auth_update(arr);
         return "redirect:/";
     }
 
