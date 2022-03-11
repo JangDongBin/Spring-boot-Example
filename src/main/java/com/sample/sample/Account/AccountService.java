@@ -159,11 +159,11 @@ public class AccountService implements UserDetailsService {
         try {
             if (auth_array != null && auth_array.length > 0) {
                 for (int i = 0; i < auth_array.length; i++) {
-                    if (auth_array[i].equals("ROLE_TEMPORARY_USER")) {
+                    if (auth_array[i].equals("1")) {
                         temp.add(i, roles.get(0));
-                    } else if (auth_array[i].equals("ROLE_USER")) {
+                    } else if (auth_array[i].equals("2")) {
                         temp.add(i, roles.get(1));
-                    } else if (auth_array[i].equals("ROLE_ADMIN")) {
+                    } else if (auth_array[i].equals("3")) {
                         temp.add(i, roles.get(2));
                     }
                 }
@@ -220,4 +220,3 @@ public class AccountService implements UserDetailsService {
     }
 
 }
-

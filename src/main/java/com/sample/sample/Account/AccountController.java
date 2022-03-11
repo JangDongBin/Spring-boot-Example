@@ -1,6 +1,5 @@
 package com.sample.sample.account;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -32,14 +31,14 @@ public class AccountController {
     @GetMapping("/add")
     public String account_Add(Model model, @RequestParam(required = false) Long id) {
         accountService.detailProcess(model, id);
-        return "account/Add";
+        return "account/add";
     }
 
     // 회원가입처리
     @PostMapping("/add")
-    public String account_add_Post(@Valid AccountForm accountForm, Model model, Errors errors) {
+    public String account_add_Post(@Valid AccountForm accountForm,  Errors errors , Model model) {
         if (errors.hasErrors()) {
-            return "account/Add";
+            return "account/add";
         }
         accountService.updateProcess(accountForm);
         return "redirect:/";

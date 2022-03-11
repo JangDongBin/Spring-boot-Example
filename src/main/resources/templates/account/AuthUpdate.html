@@ -17,11 +17,14 @@
         <h2>계정 권한 업데이트</h2>
         <h3>현재 계정 권한 종류</h3>
         <span sec:authentication="principal.authorities"></span>
-        <div class="row mb-3">
-            <label><input type="checkbox" name="auth" value="ROLE_TEMPORARY_USER"> 임시사용자</label>
-            <label><input type="checkbox" name="auth" value="ROLE_USER"> 인증사용자</label>
-            <label><input type="checkbox" name="auth" value="ROLE_ADMIN"> 관리자</label>
-            <button onclick="btn_click();">저장</button>
+        <div>
+            <div class="row mb-3" >
+                <label><input type="checkbox" id="check_box1" name="auth" value="1"> 임시사용자</label>
+                <label><input type="checkbox" id="check_box2" name="auth" value="2"> 인증사용자</label>
+                <label><input type="checkbox" id="check_box3" name="auth" value="3"> 관리자</label>
+            </div>
+
+            <button id="submit_button" onclick="btn_click();" disabled>저장</button>
         </div>
     </div>
 </body>
@@ -57,4 +60,16 @@
             }
         });
     }
+/*
+    //버튼 활성 비활성 함수
+    function terms_changed() {
+        
+        if () {
+            //버튼 활성화
+            document.getElementById("submit_button").disabled = false;
+        } else {
+            //버튼 비활성화
+            document.getElementById("submit_button").disabled = true;
+        }
+    }*/
 </script>
