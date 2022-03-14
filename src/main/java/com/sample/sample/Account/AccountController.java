@@ -1,7 +1,10 @@
 package com.sample.sample.account;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountController {
 
+    private final AccountRepository accountRepository;
+    private final RoleRepository roleRepository;
     private final AccountService accountService;
     private final AccountFormValidator accountFormValidator;
 
@@ -60,14 +65,28 @@ public class AccountController {
 
     // 권한 업데이트
     @GetMapping("/update")
-    public String auth_update() {
+    public String auth_update(@RequestParam(required = false) String userid, Model model) {
+        if (userid != null) {
+            Account searchAccount = accountRepository.findByUserid(userid);
+
+            if (searchAccount == null) {
+                model.addAttribute("message", "일치하는 아이디가 없습니다." );
+            } else{
+                model.addAttribute("auth", searchAccount.getRoles());
+            }
+        } else {
+            model.addAttribute("message", "아이디를 넣어주세요!");
+        }
+
+        model.addAttribute("allAuth", roleRepository.findAll(Sort.by(Sort.Direction.ASC,"id")));
+        model.addAttribute("userid", userid);
         return "account/AuthUpdate";
     }
 
     @PostMapping("/update")
-    public String auth_update_Post(@RequestParam(value = "arr[]") String[] arr) {
+    public String auth_update_Post(@RequestParam(value = "arr[]") List<Long> arr, String userid) {
         // ajax를 통해 넘어온 배열 데이터 선언
-        accountService.auth_update(arr);
+        accountService.auth_update(arr, userid);
         return "redirect:/";
     }
 

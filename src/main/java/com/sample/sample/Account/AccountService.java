@@ -146,50 +146,13 @@ public class AccountService implements UserDetailsService {
         context.setAuthentication(token);
     }
 
-    public void auth_update(String[] auth_array) {
-        //현재 세션값을 기준으로 사용자 정보를 불러옴
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
+    public void auth_update(List<Long> auth_array, String userid) {
+        List<Role> accountRoles = roleRepository.findByIdIn(auth_array);
 
-        List<Role> roles = new ArrayList<>();
-        List<Role> temp = new ArrayList<>();
+        Account user = accountRepository.findByUserid(userid);
+        user.setRoles(accountRoles); //set 하는 순간 권한에 대한 값들이 변경되므로 따로 save 해줄 필요가 없음.
 
-        roles = roleRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
-
-        try {
-            if (auth_array != null && auth_array.length > 0) {
-                for (int i = 0; i < auth_array.length; i++) {
-                    if (auth_array[i].equals("1")) {
-                        temp.add(i, roles.get(0));
-                    } else if (auth_array[i].equals("2")) {
-                        temp.add(i, roles.get(1));
-                    } else if (auth_array[i].equals("3")) {
-                        temp.add(i, roles.get(2));
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // userid 찾아오기
-        String userName = null;
-        if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            userName = userDetails.getUsername();
-        }
-        Account temp1 = accountRepository.findByUserid(userName);
-        Account resave_account;
-        resave_account = Account.builder()
-                .id(temp1.getId())
-                .userid(temp1.getUserid())
-                .password(temp1.getPassword())
-                .name(temp1.getName())
-                .email(temp1.getEmail())
-                .tel(temp1.getTel())
-                .roles(temp)
-                .build();
-        accountRepository.save(resave_account);
-        System.out.println(resave_account);
+        //System.out.println(user);// user에 대한 값이 잘 들어갔는지 확인하는 코드.
     }
 
     public void signupProcess(Model model, String token, Long userid) {
@@ -214,9 +177,6 @@ public class AccountService implements UserDetailsService {
             }else model.addAttribute("error", "worng token!");
 
         }
-
-        
-    
     }
 
 }

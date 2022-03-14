@@ -14,18 +14,51 @@
 <body>
     <div class="container">
         <hr class="my-4">
-        <h2>계정 권한 업데이트</h2>
-        <h3>현재 계정 권한 종류</h3>
-        <span sec:authentication="principal.authorities"></span>
-        <div>
-            <div class="row mb-3" >
-                <label><input type="checkbox" id="check_box1" name="auth" value="1"> 임시사용자</label>
-                <label><input type="checkbox" id="check_box2" name="auth" value="2"> 인증사용자</label>
-                <label><input type="checkbox" id="check_box3" name="auth" value="3"> 관리자</label>
+        <form class="row g-3" th:action="@{/account/update}" method="get">
+            <div>
+                <label for="userid">아이디 검색</label>
+                <input type="text" id="userid" placeholder="아이디를 입력하세요!" name="userid" required th:value="${userid}">
             </div>
+            <div>
+                <button type="submit" class="btn btn-primary mb-3">검색</button>
+            </div>
+        </form>
 
-            <button id="submit_button" onclick="btn_click();" disabled>저장</button>
-        </div>
+        <table class="table table-striped">
+            <thead>
+                <th>항목</th>
+                <th>내용</th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>아이디</td>
+                    <td id="userid" th:text="${userid} ? ${userid} : '-' ">admin</td>
+                </tr>
+                <tr th:if="${auth != null } ">
+                    <td>보유권한</td>
+                    <td>
+                        <span th:each=" role: ${auth}">
+                            <span th:text="${role.authority}"></span> 
+                        </span>
+                    </td>
+                </tr>
+
+                <tr th:if="${allAuth != null } ">
+                    <td>권한 종류</td>
+                    <td>
+                        <span th:each=" role: ${allAuth}">
+                            <input type="checkbox" th:text="${role.authority}" th:value="${role.id}" name="auth">
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="hidden" id="nickname" th:value="${searchText}">
+
+        <button type="button" class="btn btn-success" th:classappend="${auth} == null ? 'disabled' : '' "
+            onclick="btn_click();">권한 수정하기</button>
     </div>
 </body>
 
@@ -39,6 +72,7 @@
 
         var chkArray = [];
         var i = 0;
+        const userid = document.getElementById("userid").value;
 
         $("input[name='auth']:checked").each(function () {
             var tmpVal = $(this).val();
@@ -49,7 +83,9 @@
             url: '/account/update',
             type: "post",
             traditional: true,
-            data: { "arr[]": chkArray },
+            data: { "arr[]": chkArray,
+                    "userid" : userid
+            },
             dataType: "json",
             //header에 spring security csrf값 추가해서 보내줘야
             //403 error가 안뜸
@@ -60,16 +96,15 @@
             }
         });
     }
-/*
-    //버튼 활성 비활성 함수
-    function terms_changed() {
-        
-        if () {
-            //버튼 활성화
+
+    function terms_changed(termsCheckBox) {
+        //If the checkbox has been checked
+        if (termsCheckBox.checked) {
+            //Set the disabled property to FALSE and enable the button.
             document.getElementById("submit_button").disabled = false;
         } else {
-            //버튼 비활성화
+            //Otherwise, disable the submit button.
             document.getElementById("submit_button").disabled = true;
         }
-    }*/
+    }
 </script>
