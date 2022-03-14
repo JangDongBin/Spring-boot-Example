@@ -46,7 +46,7 @@
             url: '/account/update',
             type: "post",
             traditional: true,
-            data: { "auth": chkArray },
+            data: { "arr[]": chkArray },
             dataType: "json",
             //header에 spring security csrf값 추가해서 보내줘야
             //403 error가 안뜸
