@@ -54,7 +54,7 @@ public class AccountService implements UserDetailsService {
 				.toString());
     
         tempMailSender.send(simpleMailMessage);
-        System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
+        //System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
     }
 
     // 회원가입 / 회원 정보 보기
@@ -144,6 +144,7 @@ public class AccountService implements UserDetailsService {
                 account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(token);
+        
     }
 
     public void auth_update(String[] auth_array) {
