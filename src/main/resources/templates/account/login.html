@@ -25,7 +25,14 @@
 
             <input class="btn btn-primary btn-lg btn-block" type="submit" value="로그인">
         </form>
+
+        <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+            <!--  -->
+            <span style="color:red; font-weight:bold;" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+        </div>
     </div>
+
+    
 </body>
 
 </html>
