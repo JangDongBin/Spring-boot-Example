@@ -12,14 +12,13 @@
    
         <div class = "container">
     
-    <!--       에러메시지 화면-->
+ 
             <div class = "py-5 text-center" th:if="${error != null}">
                 <p class="lead">장봐요</p>
                 <div class ="alert alert-danger" role="alert" th:text="${error}"></div>
                 <p class="lead" th:text="${email}">example@email.com</p>
-            </div>
-    
-    <!--        일반 화면-->
+            </div>    
+   
             <div class = "py-5 text-center" th:if="${error == null}">
                 <p class="lead">장봐요</p>
                 <h2>장봐요 서비스를 사용하려면 인증 이메일을 확인하세요.</h2>
