@@ -56,9 +56,9 @@
         </table>
 
         <input type="hidden" id="nickname" th:value="${searchText}">
+        
 
-        <button type="button" class="btn btn-success" th:classappend="${auth} == null ? 'disabled' : '' "
-            onclick="btn_click();">권한 수정하기</button>
+        <button type="button" class="btn btn-success" th:classappend="${auth} == null ? 'disabled' : '' " onclick="btn_click();">권한 수정하기</button>
     </div>
 </body>
 
@@ -71,7 +71,6 @@
         var header = $("meta[name='_csrf_header']").attr("content");
 
         var chkArray = [];
-        var i = 0;
         const userid = document.getElementById("userid").value;
 
         $("input[name='auth']:checked").each(function () {
@@ -93,8 +92,15 @@
                 xhr.setRequestHeader(header, token);
             },
             success: function (data) {
+                console.log(data);
+                alert('권한이 수정되었습니다!');
+                location.reload();
+            },
+            error: function (e) {
+                console.log("error" + data);
             }
         });
+        
     }
 
     function terms_changed(termsCheckBox) {
