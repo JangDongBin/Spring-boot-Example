@@ -101,6 +101,7 @@ public class AccountService implements UserDetailsService {
                     .name(AccountForm.getNameField())
                     .email(AccountForm.getEmailField())
                     .tel(AccountForm.getTelField())
+                    .emailTokenSendAt(LocalDateTime.now())
                     .roles(temp)
                     .build();
         } else {
@@ -111,6 +112,7 @@ public class AccountService implements UserDetailsService {
                     .name(AccountForm.getNameField())
                     .email(AccountForm.getEmailField())
                     .tel(AccountForm.getTelField())
+                    .emailTokenSendAt(LocalDateTime.now())
                     .roles(temp)
                     .build();
         }
@@ -118,7 +120,7 @@ public class AccountService implements UserDetailsService {
         newAccount.setEmailTokenfalse();
         // 이메일 변경 해주세요 제발 히잉
         
-        newAccount.setEmailTokenSendtime();
+        
         accountRepository.save(newAccount);
         mailSend("ggb04212@naver.com", newAccount.getName(),
         newAccount.getEmailToken(), newAccount.getId());

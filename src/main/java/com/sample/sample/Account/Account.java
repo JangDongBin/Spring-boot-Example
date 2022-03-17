@@ -68,7 +68,8 @@ public class Account {
     }
 
     public boolean canSendConfirmEmail(){
-        return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
+        //return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
+        return true;
     }
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role_join_table", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
