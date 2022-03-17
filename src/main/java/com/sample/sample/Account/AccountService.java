@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -58,30 +56,12 @@ public class AccountService implements UserDetailsService {
         //System.out.println("\n\n\n\n\n\n메일전송\n\n\n\n\n");
     }
 
-    // 회원가입 / 회원 정보 보기
-    public void detailProcess(Model model, Long id) {
-    
-        if (id != null) {
-            Optional<Account> account = accountRepository.findById(id);
-
-            if (account.isPresent()) {
-                AccountForm accountForm = AccountForm.builder()
-                        .id(account.get().getId())
-                        .useridField(account.get().getUserid())
-                        .passwordField(null)
-                        .nameField(account.get().getName())
-                        .emailField(account.get().getEmail())
-                        .telField(account.get().getTel())
-                        .build();
-
-                model.addAttribute("accountForm", accountForm);
-            }
-        } else {
-            model.addAttribute("accountForm", new AccountForm());
-        }
+    // 회원가입 폼
+    public void account_add_Process(Model model) {
+        model.addAttribute("accountForm", new AccountForm());
     }
 
-    // 회원가입
+    // 회원가입 세이브
     public void updateProcess(AccountForm AccountForm) {
         Account newAccount;
         List<Role> roles = new ArrayList<>();
@@ -118,8 +98,6 @@ public class AccountService implements UserDetailsService {
         }
         newAccount.creationEmailTokenValue();
         newAccount.setEmailTokenfalse();
-        // 이메일 변경 해주세요 제발 히잉
-        
         
         accountRepository.save(newAccount);
         mailSend("ggb04212@naver.com", newAccount.getName(),
@@ -151,13 +129,13 @@ public class AccountService implements UserDetailsService {
         
     }
 
+    //회원 권한 수정
     public void auth_update(List<Long> auth_array, String userid) {
         List<Role> accountRoles = roleRepository.findByIdIn(auth_array);
-
         Account user = accountRepository.findByUserid(userid);
         user.setRoles(accountRoles); //set 하는 순간 권한에 대한 값들이 변경되므로 따로 save 해줄 필요가 없음.
 
-        //System.out.println(user);// user에 대한 값이 잘 들어갔는지 확인하는 코드.
+        //System.out.println(user);
     }
 
     public void signupProcess(Model model, String token, Long userid) {
