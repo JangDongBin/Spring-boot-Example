@@ -101,7 +101,7 @@ public class AccountService implements UserDetailsService {
                     .name(AccountForm.getNameField())
                     .email(AccountForm.getEmailField())
                     .tel(AccountForm.getTelField())
-                    .emailTokenSendAt(LocalDateTime.now())
+                    .emailTokenSendAt(LocalDateTime.of(2000, 01, 01, 0, 0, 0))
                     .roles(temp)
                     .build();
         } else {
@@ -112,7 +112,7 @@ public class AccountService implements UserDetailsService {
                     .name(AccountForm.getNameField())
                     .email(AccountForm.getEmailField())
                     .tel(AccountForm.getTelField())
-                    .emailTokenSendAt(LocalDateTime.now())
+                    .emailTokenSendAt(LocalDateTime.of(2000, 01, 01, 0, 0, 0))
                     .roles(temp)
                     .build();
         }
