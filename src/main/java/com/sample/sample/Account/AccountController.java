@@ -62,6 +62,23 @@ public class AccountController {
         accountService.signupProcess(model, token, userid);
         return "account/tokencheck";
     }
+    // 인증메일 재전송
+    @GetMapping("/resend")
+    public String mail_resend_index() {
+        return "account/emailcheck";
+    }
+    // 인증메일 재전송
+    @GetMapping("/resend_email")
+    public String mail_resend(@CurrentUser Account account, Model model) {
+        if(!account.canSendConfirmEmail()){
+            model.addAttribute("error", "인증 이메일은 1시간에 한번만 전송할 수 있습니다.");
+            model.addAttribute("email", account.getEmail());
+            return "account/emailcheck";
+        }
+
+        accountService.sendSignUpConfirmEmail(account);
+        return "redirect:/";
+    }
 
     // 권한 업데이트
     @GetMapping("/update")

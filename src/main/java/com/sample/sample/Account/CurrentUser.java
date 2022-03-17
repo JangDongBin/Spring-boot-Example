@@ -1,4 +1,4 @@
-package com.sample.sample.main;
+package com.sample.sample.account;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

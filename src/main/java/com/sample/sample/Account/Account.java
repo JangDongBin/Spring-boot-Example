@@ -1,5 +1,6 @@
 package com.sample.sample.account;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -45,6 +46,8 @@ public class Account {
 
     private String emailToken;
 
+    private LocalDateTime emailTokenSendAt;
+
     @Column(columnDefinition = "boolean default false")
     private Boolean emailTokenVaild;
 
@@ -60,6 +63,13 @@ public class Account {
         this.emailTokenVaild = false;
     }
 
+    public void setEmailTokenSendtime() { 
+        this.emailTokenSendAt = LocalDateTime.now();
+    }
+
+    public boolean canSendConfirmEmail(){
+        return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
+    }
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role_join_table", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     public List<Role> roles = new ArrayList<>();

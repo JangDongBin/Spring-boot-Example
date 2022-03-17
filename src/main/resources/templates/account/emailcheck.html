@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이메일 체크</title>
+</head>
+
+<header th:replace="fragments/header.html"></header>
+<body class="bg-light">
+   
+        <div class = "container">
+    
+    <!--       에러메시지 화면-->
+            <div class = "py-5 text-center" th:if="${error != null}">
+                <p class="lead">장봐요</p>
+                <div class ="alert alert-danger" role="alert" th:text="${error}"></div>
+                <p class="lead" th:text="${email}">example@email.com</p>
+            </div>
+    
+    <!--        일반 화면-->
+            <div class = "py-5 text-center" th:if="${error == null}">
+                <p class="lead">장봐요</p>
+                <h2>장봐요 서비스를 사용하려면 인증 이메일을 확인하세요.</h2>
+    
+                <div>
+                <p class="lead" th:text="${email}">test@email.com</p>
+                <a class="btn btn-outline-info" th:href="@{/account/resend_email}">
+                    인증 이메일 다시 보내기
+                </a>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+    
+        </body>
+</html>

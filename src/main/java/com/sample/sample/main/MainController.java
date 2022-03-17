@@ -1,6 +1,7 @@
 package com.sample.sample.main;
 
 import com.sample.sample.account.Account;
+import com.sample.sample.account.CurrentUser;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

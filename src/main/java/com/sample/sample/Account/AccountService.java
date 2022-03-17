@@ -1,5 +1,6 @@
 package com.sample.sample.account;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -117,10 +118,11 @@ public class AccountService implements UserDetailsService {
         newAccount.setEmailTokenfalse();
         // 이메일 변경 해주세요 제발 히잉
         
-
+        newAccount.setEmailTokenSendtime();
         accountRepository.save(newAccount);
         mailSend("ggb04212@naver.com", newAccount.getName(),
         newAccount.getEmailToken(), newAccount.getId());
+        
     }
 
     @Override
@@ -161,7 +163,7 @@ public class AccountService implements UserDetailsService {
             Optional<Account> Accountop = accountRepository.findById(userid);
             if (Accountop.get().getEmailToken().equals(token)) {
                 Account newAccount = Accountop.get();
-            
+                
                 newAccount = Account.builder()
                         .id(newAccount.getId())
                         .userid(newAccount.getUserid())
@@ -175,9 +177,17 @@ public class AccountService implements UserDetailsService {
                 accountRepository.save(newAccount);     
                 model.addAttribute("name", newAccount.getName());
                 model.addAttribute("id", newAccount.getId());
+                System.out.println("인증완료");
             }else model.addAttribute("error", "worng token!");
 
         }
+    }
+
+    public void sendSignUpConfirmEmail(Account account) {
+
+        mailSend("ggb04212@naver.com", account.getName(),
+        account.getEmailToken(), account.getId()); //메일 보내고
+        account.setEmailTokenSendtime(); // 보낸시간 찍고
     }
 
 }

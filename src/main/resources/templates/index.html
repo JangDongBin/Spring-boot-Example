@@ -15,7 +15,7 @@
 
 <body>
 
-    <div class="alert alert-warning" role="alert" th:if="${account?.emailTokenVaild} == false">이메일을 인증해 주세요</div>
+    <div class="alert alert-warning" role="alert" th:if="${account?.emailTokenVaild} == false" onclick="location.href='/account/resend/';" >이메일을 인증해 주세요</div>
     <div class="container">
         <h1>HOME</h1>
         <div class="row mb-3">
