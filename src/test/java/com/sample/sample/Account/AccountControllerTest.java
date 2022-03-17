@@ -61,7 +61,7 @@ public class AccountControllerTest {
         System.out.println("AFTER======================");
     }
     
-    @WithUserDetails(value = "test", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "test12345", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("권한 업데이트")
     @Test
     public void Auth_Update_pass() throws Exception {

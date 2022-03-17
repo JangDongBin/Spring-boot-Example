@@ -32,10 +32,10 @@ public class AccountController {
         webDataBinder.addValidators(accountFormValidator);
     }
 
-    // 회원가입 / 회원정보 수정
+    // 회원가입
     @GetMapping("/add")
-    public String account_Add(Model model, @RequestParam(required = false) Long id) {
-        accountService.detailProcess(model, id);
+    public String account_Add(Model model) {
+        accountService.account_add_Process(model);
         return "account/add";
     }
 
@@ -87,7 +87,8 @@ public class AccountController {
     public String auth_update_Post(@RequestParam(value = "arr[]") List<Long> arr, String userid) {
         // ajax를 통해 넘어온 배열 데이터 선언
         accountService.auth_update(arr, userid);
-        return "redirect:/";
+        return "redirect:/account/update";
+        //account/AuthUpdate??userid="+userid;
     }
 
     // 권한확인
