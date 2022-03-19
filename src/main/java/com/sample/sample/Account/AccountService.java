@@ -102,7 +102,6 @@ public class AccountService implements UserDetailsService {
         accountRepository.save(newAccount);
         mailSend("ggb04212@naver.com", newAccount.getName(),
         newAccount.getEmailToken(), newAccount.getId());
-        
     }
 
     @Override
@@ -126,16 +125,15 @@ public class AccountService implements UserDetailsService {
                 account.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(token);
-        
     }
 
     //회원 권한 수정
-    public void auth_update(List<Long> auth_array, String userid) {
+    public Account auth_update(List<Long> auth_array, String userid) {
         List<Role> accountRoles = roleRepository.findByIdIn(auth_array);
         Account user = accountRepository.findByUserid(userid);
-        user.setRoles(accountRoles); //set 하는 순간 권한에 대한 값들이 변경되므로 따로 save 해줄 필요가 없음.
+        user.setRoles(accountRoles);
 
-        //System.out.println(user);
+        return accountRepository.save(user);
     }
 
     public void signupProcess(Model model, String token, Long userid) {
@@ -153,7 +151,7 @@ public class AccountService implements UserDetailsService {
                         .tel(newAccount.getTel())
                         .emailToken(newAccount.getEmailToken())
                         .emailTokenVaild(true)                        
-                        .build(); 
+                        .build();
                 accountRepository.save(newAccount);     
                 model.addAttribute("name", newAccount.getName());
                 model.addAttribute("id", newAccount.getId());

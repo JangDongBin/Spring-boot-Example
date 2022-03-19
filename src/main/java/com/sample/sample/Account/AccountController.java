@@ -11,9 +11,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.RequiredArgsConstructor;
 
@@ -101,11 +104,12 @@ public class AccountController {
     }
 
     @PostMapping("/update")
-    public String auth_update_Post(@RequestParam(value = "arr[]") List<Long> arr, String userid) {
-        // ajax를 통해 넘어온 배열 데이터 선언
-        accountService.auth_update(arr, userid);
-        return "redirect:/account/update";
-        //account/AuthUpdate??userid="+userid;
+    @ResponseBody
+    public Account auth_update_Post(@RequestBody List<Long> arr, @RequestParam(value="userid") String search_userid) {
+        System.out.println("\n");
+        System.out.println(arr);
+        System.out.println(search_userid);
+        return accountService.auth_update(arr, search_userid);
     }
 
     // 권한확인
