@@ -44,7 +44,7 @@ public class AccountControllerTest {
 
     @BeforeEach
     private void beforeEach() {
-        
+
         System.out.println("BEFORE======================");
         AccountForm accountForm = new AccountForm();
         accountForm.setUseridField("test12345");
@@ -53,14 +53,14 @@ public class AccountControllerTest {
         accountForm.setEmailField("jangbayo@jangbolggayo.com");
         accountService.updateProcess(accountForm);
         System.out.println("BEFORE======================");
-        
+
     }
-    
+
     @AfterEach
-    private void AfterEach(){
+    private void AfterEach() {
         System.out.println("AFTER======================");
     }
-    
+
     @WithUserDetails(value = "test12345", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("권한 업데이트")
     @Test
@@ -70,17 +70,17 @@ public class AccountControllerTest {
 
         List<Long> rolesValue = new ArrayList<>();
 
-        for (Role role : roles){
+        for (Role role : roles) {
             rolesValue.add(role.getId());
         }
 
         mockMvc.perform(post("/account/update?userid=" + userid)
-                .param("arr[]", "1,2,3")
+                .content(rolesValue.toString())
+                .contentType("application/json")
+                .param("nickname", userid)
                 .with(csrf()))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk());
     }
-
-
 
     @DisplayName("회원가입 - 정상")
     @Test
@@ -106,7 +106,6 @@ public class AccountControllerTest {
                 .andExpect(status().isOk());
     }
 
-
     @DisplayName("로그인 - 성공")
     @Test
     public void Login_pass() throws Exception {
@@ -126,7 +125,5 @@ public class AccountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk());
     }
-
-    
 
 }

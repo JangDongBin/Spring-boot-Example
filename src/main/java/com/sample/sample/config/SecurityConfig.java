@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    //private AccountService accountService;
+    //private LoginSuccessHandler loginSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -31,7 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
-
+                
+        http.rememberMe()
+                .key("oingdaddy!")
+                .rememberMeParameter("remember-me")
+                .tokenValiditySeconds(86400*30);
     }
 
     @Override

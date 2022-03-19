@@ -55,7 +55,7 @@
             </tbody>
         </table>
 
-        <input type="hidden" id="nickname" th:value="${searchText}">
+        <input type="hidden" id="search_userid" th:value="${userid}">
         
 
         <button type="button" class="btn btn-success" th:classappend="${auth} == null ? 'disabled' : '' " onclick="btn_click();">권한 수정하기</button>
@@ -79,12 +79,10 @@
         });
 
         $.ajax({
-            url: '/account/update',
             type: "post",
-            traditional: true,
-            data: { "arr[]": chkArray,
-                    "userid" : userid
-            },
+            contentType: 'application/json',
+            url: '/account/update?userid=' + userid,
+            data: JSON.stringify(chkArray),
             dataType: "json",
             //header에 spring security csrf값 추가해서 보내줘야
             //403 error가 안뜸
@@ -94,7 +92,6 @@
             success: function (data) {
                 console.log(data);
                 alert('권한이 수정되었습니다!');
-                location.reload();
             },
             error: function (e) {
                 console.log("error" + data);
