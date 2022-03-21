@@ -23,16 +23,21 @@
                 비밀번호<input class="form-control" type="password" name="password" value="">
             </div>
 
+            <p>
+                <label for="remember-me" style>로그인 유지</label>
+                <input type="checkbox" id="remember-me" name="remember-me" />
+            </p>
+
             <input class="btn btn-primary btn-lg btn-block" type="submit" value="로그인">
         </form>
 
         <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
-            <!--  -->
-            <span style="color:red; font-weight:bold;" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+            <span style="color:red; font-weight:bold;"
+                th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
         </div>
     </div>
 
-    
+
 </body>
 
 </html>
