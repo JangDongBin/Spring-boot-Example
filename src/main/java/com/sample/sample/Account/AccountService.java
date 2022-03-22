@@ -30,8 +30,8 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final TempMailSender tempMailSender;
     //private final JavaMailSender javaMailSender;    
-    private final TempMailSender tempMailSender;    
     //@Value("${spring.mail.username}")
     //private final String sendFrom;
 

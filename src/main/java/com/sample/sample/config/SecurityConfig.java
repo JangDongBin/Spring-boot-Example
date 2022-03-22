@@ -1,7 +1,6 @@
 package com.sample.sample.config;
 
-import com.sample.sample.account.AccountService;
-import com.sample.sample.account.UserAccount;
+import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -10,15 +9,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    //private AccountService accountService;
-    //private LoginSuccessHandler loginSuccessHandler;
+
+    private final UserDetailsService accountService;
+    private final DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -34,11 +39,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
-                
+
+        //remember-me
         http.rememberMe()
-                .key("oingdaddy!")
-                .rememberMeParameter("remember-me")
-                .tokenValiditySeconds(86400*30);
+                .userDetailsService(accountService) //user-detail-service
+                .tokenRepository(tokenRepository());
+    }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository(){
+        JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepositoryImpl.setDataSource(dataSource);
+
+        return jdbcTokenRepositoryImpl;
     }
 
     @Override

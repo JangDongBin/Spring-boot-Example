@@ -65,11 +65,13 @@ public class AccountController {
         accountService.signupProcess(model, token, userid);
         return "account/tokencheck";
     }
+
     // 인증메일 재전송
     @GetMapping("/resend")
     public String mail_resend_index() {
         return "account/emailcheck";
     }
+    
     // 인증메일 재전송
     @GetMapping("/resend_email")
     public String mail_resend(@CurrentUser Account account, Model model) {
