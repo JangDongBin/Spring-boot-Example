@@ -55,6 +55,7 @@ public class BoardService {
         }
 
         boardRepository.save(newBoard);
+        //System.out.println(newBoard);
         return newBoard;
     }
 
